@@ -17,7 +17,7 @@ namespace GeneticEngine.Selection
             _name = "Roulette";
         }
 
-        public void Selection(ITrack[] parentTracks, ITrack[] childTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentAbstractTracks, AbstractTrack[] childAbstractTracks, IGraph graph)
         {
             throw new NotImplementedException();
         }

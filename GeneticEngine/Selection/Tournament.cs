@@ -9,13 +9,13 @@ namespace GeneticEngine.Selection
 {
     public class Tournament : ISelection
     {
-        public void Selection(ITrack[] parentTracks, ITrack[] childTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentAbstractTracks, AbstractTrack[] childAbstractTracks, IGraph graph)
         {
-            for (int i = 0; i < parentTracks.Length; i++)
+            for (int i = 0; i < parentAbstractTracks.Length; i++)
             {
-                if (parentTracks[i].GetTrackLength(graph) > childTracks[i].GetTrackLength(graph))
+                if (parentAbstractTracks[i].GetTrackLength(graph) > childAbstractTracks[i].GetTrackLength(graph))
                 {
-                    parentTracks[i] = childTracks[i];
+                    parentAbstractTracks[i] = childAbstractTracks[i];
                 }
             }
         }

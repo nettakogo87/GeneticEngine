@@ -5,7 +5,7 @@ namespace GeneticEngine.Selection
 {
     public interface ISelection
     {
-        void Selection(ITrack[] parentTracks, ITrack[] childTracks, IGraph graph);
+        void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph);
         string GetName();
     }
 }

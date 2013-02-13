@@ -8,7 +8,7 @@ namespace GeneticEngine.Mutation
 {
     public class TwoPointMutation : IMutation
     {
-        public void Mutation(ITrack mutant)
+        public void Mutation(AbstractTrack mutant)
         {
             Random randomPosition = new Random();
             int firstPosition = randomPosition.Next(mutant.Genotype.Length - 1);

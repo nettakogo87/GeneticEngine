@@ -7,41 +7,16 @@ using GeneticEngine.Graph;
 
 namespace GeneticEngine.Track
 {
-    public class UnclosedTrack : ITrack
+    public class UnclosedTrack : AbstractTrack
     {
-        public UnclosedTrack(int countOfAllele, bool autofill)
+        public UnclosedTrack(int[] trackPoints) : base(trackPoints)
         {
-            Genotype = new int[countOfAllele];
-            for (int i = 0; i < countOfAllele; i++)
-            {
-                Genotype[i] = -1;
-            }
-            TypeOfCrossingover = "Not";
-            TypeOfMutation = "Not";
-            TypeOfSelection = "Not";
-
-            if (autofill)
-            {
-                Random randomChromosome = new Random();
-                int newRandomChromosome = randomChromosome.Next(countOfAllele - 1);
-                for (int i = 0; i < countOfAllele; i++)
-                {
-                    while (Genotype.Contains(newRandomChromosome))
-                    {
-                        newRandomChromosome = randomChromosome.Next(countOfAllele);
-                    }
-                    Genotype[i] = newRandomChromosome;
-                }
-            }
+        }
+        public UnclosedTrack(int countOfAllele, bool autofill) : base(countOfAllele, autofill)
+        {
         }
 
-        public UnclosedTrack(int[] trackPoints)
-        {
-            Genotype = new int[trackPoints.Length];
-            trackPoints.CopyTo(Genotype, 0);
-        }
-
-        public double GetTrackLength(IGraph graph)
+        public override double GetTrackLength(IGraph graph)
         {
             double trackLength = 0;
             for (int i = 0; i < Genotype.Length - 1; i++)
@@ -50,14 +25,11 @@ namespace GeneticEngine.Track
             }
             return trackLength;
         }
-        public string TypeOfTrack
-        {
-            get { return "UnclosedTrack"; }
-        }
 
-        public int[] Genotype { get; set; }
-        public string TypeOfSelection { get; set; }
-        public string TypeOfMutation { get; set; }
-        public string TypeOfCrossingover { get; set; }
+        public override AbstractTrack EmptyClone()
+        {
+            UnclosedTrack track = new UnclosedTrack(this.Genotype.Length, false);
+            return (AbstractTrack) track;
+        }
     }
 }

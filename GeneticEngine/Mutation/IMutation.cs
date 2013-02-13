@@ -8,7 +8,7 @@ namespace GeneticEngine.Mutation
 {
     public interface IMutation
     {
-        void Mutation(ITrack mutant);
+        void Mutation(AbstractTrack mutant);
         string GetName();
     }
 }

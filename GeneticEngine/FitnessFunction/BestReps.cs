@@ -20,12 +20,12 @@ namespace GeneticEngine.FitnessFunction
             _bestResult = 0;
         }
 
-        public bool Fitness(ITrack[] tracks, IGraph graph)
+        public bool Fitness(AbstractTrack[] abstractTracks, IGraph graph)
         {
-            double[] results = new double[tracks.Length];
-            for (int i = 0; i < tracks.Length; i++)
+            double[] results = new double[abstractTracks.Length];
+            for (int i = 0; i < abstractTracks.Length; i++)
             {
-                results[i] = tracks[i].GetTrackLength(graph);
+                results[i] = abstractTracks[i].GetTrackLength(graph);
             }
             double minTracksResult = results.Min();
 
