@@ -40,7 +40,7 @@ namespace GeneticEngineTests.Crossingover
         [TestMethod()]
         public void CrossingoverTest()
         {
-            ICrossingover target = new TwoPointCrossingover(); // TODO: инициализация подходящего значения
+            ICrossingover target = new TwoPointCrossingover(); 
             target.Crossingover(_parent1, _parent2, _child1, _child2);
             Assert.IsTrue(!Array.Exists(_child1.Genotype, NegativeNumber));
             Assert.IsTrue(!Array.Exists(_child2.Genotype, NegativeNumber));
