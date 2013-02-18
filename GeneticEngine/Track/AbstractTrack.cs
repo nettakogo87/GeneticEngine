@@ -10,6 +10,8 @@ namespace GeneticEngine.Track
     {
         public const int AggregateOfGenotype = -1;
         public abstract double GetTrackLength(IGraph graph);
+        public abstract Dictionary<int, int> GetWorstRip(IGraph graph);
+        public abstract Dictionary<int, int> GetBestRip(IGraph graph);
 
         protected AbstractTrack(int[] trackPoints)
         {

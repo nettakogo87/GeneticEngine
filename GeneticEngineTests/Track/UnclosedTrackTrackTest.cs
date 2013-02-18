@@ -55,5 +55,25 @@ namespace GeneticEngineTests.Track
             AbstractTrack actual = _track.EmptyClone();
             Assert.AreEqual(expected, actual.GetType().ToString());
         }
+
+        /// <summary>
+        ///Тест для GetWorstRip
+        ///</summary>
+        [TestMethod()]
+        public void GetWorstRipTest()
+        {
+            Dictionary<int, int> actual = _track.GetWorstRip(_graph);
+            Assert.IsTrue(actual.ContainsValue(1) && actual.ContainsValue(3));
+        }
+
+        /// <summary>
+        ///Тест для GetBestRip
+        ///</summary>
+        [TestMethod()]
+        public void GetBestRipTest()
+        {
+            Dictionary<int, int> actual = _track.GetBestRip(_graph);
+            Assert.IsTrue(actual.ContainsValue(0) && actual.ContainsValue(2));
+        }
     }
 }
