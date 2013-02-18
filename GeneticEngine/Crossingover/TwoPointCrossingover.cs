@@ -9,7 +9,7 @@ namespace GeneticEngine.Crossingover
     public class TwoPointCrossingover : ICrossingover
     {
         public void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild,
-                                 AbstractTrack secondChaild)
+                                 AbstractTrack secondChild)
         {
             int countOfAlleles = firstParent.Genotype.Length;
             Random randomPositionOne = new Random();
@@ -20,21 +20,16 @@ namespace GeneticEngine.Crossingover
             {
                 positionTwo = randomPositionTwo.Next(1, countOfAlleles);
             }
-            if (positionOne < positionTwo)
+            if (positionOne > positionTwo)
             {
-                for (int i = positionOne; i <= positionTwo; i++)
-                {
-                    firstChild.Genotype[i] = firstParent.Genotype[i];
-                    secondChaild.Genotype[i] = secondParent.Genotype[i];
-                }
+                int buff = positionOne;
+                positionOne = positionTwo;
+                positionTwo = buff;
             }
-            else
+            for (int i = positionOne; i <= positionTwo; i++)
             {
-                for (int i = positionTwo; i <= positionOne; i++)
-                {
-                    firstChild.Genotype[i] = firstParent.Genotype[i];
-                    secondChaild.Genotype[i] = secondParent.Genotype[i];
-                }
+                firstChild.Genotype[i] = firstParent.Genotype[i];
+                secondChild.Genotype[i] = secondParent.Genotype[i];
             }
             for (int i = 0; i < countOfAlleles; i++)
             {
@@ -50,9 +45,9 @@ namespace GeneticEngine.Crossingover
                     }
                     for (int j = 0; j < countOfAlleles; j++)
                     {
-                        if (!secondChaild.Genotype.Contains(firstParent.Genotype[j]))
+                        if (!secondChild.Genotype.Contains(firstParent.Genotype[j]))
                         {
-                            secondChaild.Genotype[i] = firstParent.Genotype[j];
+                            secondChild.Genotype[i] = firstParent.Genotype[j];
                             break;
                         }
                     }

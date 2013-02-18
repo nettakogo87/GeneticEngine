@@ -8,7 +8,7 @@ namespace GeneticEngine.Crossingover
 {
     public interface ICrossingover
     {
-        void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild, AbstractTrack secondChaild);
+        void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild, AbstractTrack secondChild);
         string GetName();
     }
 }

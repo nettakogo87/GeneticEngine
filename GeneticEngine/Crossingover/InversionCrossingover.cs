@@ -9,13 +9,13 @@ namespace GeneticEngine.Crossingover
     public class InversionCrossingover : ICrossingover
     {
         public void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild,
-                                 AbstractTrack secondChaild)
+                                 AbstractTrack secondChild)
         {
             int countOfAlleles = firstParent.Genotype.Length;
             for (int i = 0; i < countOfAlleles; i++)
             {
                 firstChild.Genotype[i] = firstParent.Genotype[i];
-                secondChaild.Genotype[i] = secondParent.Genotype[i];
+                secondChild.Genotype[i] = secondParent.Genotype[i];
             }
 
             Random randomPositionOne = new Random();
@@ -38,9 +38,9 @@ namespace GeneticEngine.Crossingover
                 int buff = firstChild.Genotype[i];
                 firstChild.Genotype[i] = firstChild.Genotype[j];
                 firstChild.Genotype[j] = buff;
-                buff = secondChaild.Genotype[i];
-                secondChaild.Genotype[i] = secondChaild.Genotype[j];
-                secondChaild.Genotype[j] = buff;
+                buff = secondChild.Genotype[i];
+                secondChild.Genotype[i] = secondChild.Genotype[j];
+                secondChild.Genotype[j] = buff;
             }
         }
 
