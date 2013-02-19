@@ -7,11 +7,11 @@ using GeneticEngine.Graph;
 namespace GeneticEngineTests.Selection
 {
     /// <summary>
-    ///Это класс теста для TournamentEngineTest, в котором должны
-    ///находиться все модульные тесты TournamentEngineTest
+    ///Это класс теста для TournamentSelectionTest, в котором должны
+    ///находиться все модульные тесты TournamentSelectionTest
     ///</summary>
     [TestClass()]
-    public class TournamentEngineTest : SupportingGeneticEngineTest
+    public class TournamentSelectionTest : SupportingGeneticEngineTest
     {
         #region Дополнительные атрибуты теста
 
@@ -81,7 +81,7 @@ namespace GeneticEngineTests.Selection
         [TestMethod()]
         public void SelectionTest()
         {
-            Tournament target = new Tournament(); // TODO: инициализация подходящего значения
+            TournamentSelection target = new TournamentSelection(); // TODO: инициализация подходящего значения
             target.Selection(_parents, _childs, _graph);
             Assert.IsTrue(TwoIntArrayEquals(_parents[0].Genotype, _expected[0].Genotype));
             Assert.IsTrue(TwoIntArrayEquals(_parents[1].Genotype, _expected[1].Genotype));
