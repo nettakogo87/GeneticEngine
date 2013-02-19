@@ -30,6 +30,11 @@ namespace GeneticEngine.Track
             ClosedTrack track = new ClosedTrack(this.Genotype.Length, false);
             return (AbstractTrack)track;
         }
+        public override AbstractTrack Clone()
+        {
+            UnclosedTrack track = new UnclosedTrack(this.Genotype);
+            return (AbstractTrack)track;
+        }
 
         public override Dictionary<int, int> GetWorstRip(IGraph graph)
         {

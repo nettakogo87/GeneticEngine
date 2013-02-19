@@ -46,6 +46,7 @@ namespace GeneticEngine.Track
         }
 
         public abstract AbstractTrack EmptyClone();
+        public abstract AbstractTrack Clone();
 
         public int[] Genotype { get; set; }
         public string TypeOfSelection { get; set; }
