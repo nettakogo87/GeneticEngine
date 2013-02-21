@@ -25,17 +25,17 @@ namespace GeneticEngineTests.Crossingover
         [TestInitialize()]
         public void MyTestInitialize()
         {
+            int[,] ribs = new int[10, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 0, 4 }, { 1, 2 }, { 1, 3 }, { 1, 4 }, { 2, 3 }, { 2, 4 }, { 3, 4 } };
+            double[] weights = new double[] { 3, 5, 10, 7, 8, 9, 1, 2, 4, 6 };
+            _graph = new UndirectedConnectedGraph(ribs, weights);
             int[] trackPoints1 = new int[] { 0, 2, 1, 3, 4 };
             int[] trackPoints2 = new int[] { 1, 3, 0, 4, 2 };
             _equalChild1 = new int[] { 0, 1, 3, 4, 2 };
             _equalChild2 = new int[] { 1, 3, 0, 2, 4 };
-            _parent1 = new UnclosedTrack(trackPoints1);
-            _parent2 = new UnclosedTrack(trackPoints2);
-            _child1 = new UnclosedTrack(CountOfAllele, false);
-            _child2 = new UnclosedTrack(CountOfAllele, false);
-            int[,] ribs = new int[10, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 0, 4 }, { 1, 2 }, { 1, 3 }, { 1, 4 }, { 2, 3 }, { 2, 4 }, { 3, 4 } };
-            double[] weights = new double[] { 3, 5, 10, 7, 8, 9, 1, 2, 4, 6 };
-            _graph = new UndirectedConnectedGraph(ribs, weights);
+            _parent1 = new UnclosedTrack(trackPoints1, _graph);
+            _parent2 = new UnclosedTrack(trackPoints2, _graph);
+            _child1 = new UnclosedTrack(CountOfAllele, _graph, false);
+            _child2 = new UnclosedTrack(CountOfAllele, _graph, false);
         }
 
         /// <summary>

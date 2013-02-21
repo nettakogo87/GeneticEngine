@@ -23,15 +23,15 @@ namespace GeneticEngineTests.Crossingover
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            int[] trackPoints1 = new int[] { 0, 2, 1, 3 };
-            int[] trackPoints2 = new int[] { 1, 3, 0, 2 };
-            _parent1 = new UnclosedTrack(trackPoints1);
-            _parent2 = new UnclosedTrack(trackPoints2);
-            _child1 = new UnclosedTrack(CountOfAllele, false);
-            _child2 = new UnclosedTrack(CountOfAllele, false);
             int[,] ribs = new int[6, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
             double[] weights = new double[] { 3, 5, 10, 7, 8, 9 };
             _graph = new UndirectedConnectedGraph(ribs, weights);
+            int[] trackPoints1 = new int[] { 0, 2, 1, 3 };
+            int[] trackPoints2 = new int[] { 1, 3, 0, 2 };
+            _parent1 = new UnclosedTrack(trackPoints1, _graph);
+            _parent2 = new UnclosedTrack(trackPoints2, _graph);
+            _child1 = new UnclosedTrack(CountOfAllele, _graph, false);
+            _child2 = new UnclosedTrack(CountOfAllele, _graph, false);
         }
 
         /// <summary>
