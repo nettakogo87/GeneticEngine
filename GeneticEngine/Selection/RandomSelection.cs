@@ -16,11 +16,11 @@ namespace GeneticEngine.Selection
         {
             _name = "RandomSelection";
             _selectionList = new List<ISelection>();
-            _selectionList.Add(new Roulette());
-            _selectionList.Add(new Tournament());
+            _selectionList.Add(new RouletteSelection());
+            _selectionList.Add(new TournamentSelection());
         }
 
-        public void Selection(AbstractTrack[] parentAbstractTracks, AbstractTrack[] childAbstractTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph)
         {
 
 //            _selectionList.ElementAt(1).Selection();

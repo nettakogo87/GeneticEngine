@@ -13,7 +13,7 @@ namespace GeneticEngine.Selection
         {
             for (int i = 0; i < parentTracks.Length; i++)
             {
-                if (parentTracks[i].GetTrackLength(graph) > childTracks[i].GetTrackLength(graph))
+                if (parentTracks[i].GetTrackLength() > childTracks[i].GetTrackLength())
                 {
                     parentTracks[i] = childTracks[i];
                 }
