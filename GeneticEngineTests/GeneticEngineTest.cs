@@ -21,18 +21,18 @@ namespace GeneticEngineTests
         [TestInitialize()]
         public void MyTestInitialize()
         {
+            int[,] ribs = new int[6, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
+            double[] weights = new double[] { 3, 5, 10, 7, 8, 9 };
+            _graph = new UndirectedConnectedGraph(ribs, weights);
             _closedTracks = new AbstractTrack[4];
             int[] trackPoints1 = new int[] { 0, 2, 1, 3 };
             int[] trackPoints2 = new int[] { 1, 3, 0, 2 };
             int[] trackPoints3 = new int[] { 2, 1, 0, 3 };
             int[] trackPoints4 = new int[] { 2, 3, 0, 1 };
-            _closedTracks[0] = new ClosedTrack(trackPoints1);
-            _closedTracks[1] = new ClosedTrack(trackPoints2);
-            _closedTracks[2] = new ClosedTrack(trackPoints3);
-            _closedTracks[3] = new ClosedTrack(trackPoints4);
-            int[,] ribs = new int[6, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
-            double[] weights = new double[] { 3, 5, 10, 7, 8, 9 };
-            _graph = new UndirectedConnectedGraph(ribs, weights);
+            _closedTracks[0] = new ClosedTrack(trackPoints1, _graph);
+            _closedTracks[1] = new ClosedTrack(trackPoints2, _graph);
+            _closedTracks[2] = new ClosedTrack(trackPoints3, _graph);
+            _closedTracks[3] = new ClosedTrack(trackPoints4, _graph);
         }
 
 

@@ -66,7 +66,7 @@ namespace GeneticEngine
             _countOfAllele = _tracks[0].Genotype.Length;
             _onePointCrossingover = new OnePointCrossingover();
             _twoPointMutation = new TwoPointMutation();
-            _tournamentSelection = new Tournament();
+            _tournamentSelection = new TournamentSelection();
             _fitnessFunction = fitnessFunction;
         }
 
@@ -86,7 +86,7 @@ namespace GeneticEngine
                         AbstractTrack firstChild = _tracks[i].EmptyClone();
                         AbstractTrack secondChild = _tracks[i].EmptyClone();
                         this.Crossingover(_tracks[i], _tracks[coupleIndex], firstChild, secondChild);
-                        if (firstChild.GetTrackLength(_salesmanGraph) <= secondChild.GetTrackLength(_salesmanGraph))
+                        if (firstChild.GetTrackLength() <= secondChild.GetTrackLength())
                         {
                             int mutationNotWillBe = random.Next(_pMutation);
                             if (_pMutation > mutationNotWillBe)
