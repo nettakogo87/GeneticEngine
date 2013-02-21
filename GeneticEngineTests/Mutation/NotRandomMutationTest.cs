@@ -21,12 +21,12 @@ namespace GeneticEngineTests.Mutation
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            int[] trackPoints = new int[] { 0, 2, 1, 3 };
-            _mutant = new UnclosedTrack(trackPoints);
-            _subject = new UnclosedTrack(trackPoints);
             int[,] ribs = new int[6, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
             double[] weights = new double[] { 3, 5, 10, 7, 8, 9 };
             _graph = new UndirectedConnectedGraph(ribs, weights);
+            int[] trackPoints = new int[] { 0, 2, 1, 3 };
+            _mutant = new UnclosedTrack(trackPoints, _graph);
+            _subject = new UnclosedTrack(trackPoints, _graph);
         }
 
         /// <summary>

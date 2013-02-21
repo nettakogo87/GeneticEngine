@@ -17,7 +17,7 @@ namespace GeneticEngine.Mutation
         public void Mutation(AbstractTrack mutant)
         {
             int countOfAlleles = mutant.Genotype.Length;
-            Dictionary<int, int> worstRip = mutant.GetWorstRip(_graph);
+            Dictionary<int, int> worstRip = mutant.GetWorstRip();
             DestroyBadRip(mutant, worstRip[0], worstRip[1]);
 
         }
