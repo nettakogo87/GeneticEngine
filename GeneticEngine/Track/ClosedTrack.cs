@@ -7,45 +7,53 @@ namespace GeneticEngine.Track
 {
     public class ClosedTrack : AbstractTrack
     {
-        public ClosedTrack(int[] trackPoints) : base(trackPoints)
+        public ClosedTrack(int[] trackPoints, IGraph graph)
+            : base(trackPoints, graph)
         {
         }
-        public ClosedTrack(int countOfAllele, bool autofill) : base(countOfAllele, autofill)
+        public ClosedTrack(int countOfAllele,  IGraph graph, bool autofill) : base(countOfAllele, graph, autofill)
         {
         }
 
-        public override double GetTrackLength(IGraph graph)
+        public override double GetTrackLength()
         {
             double trackLength = 0;
             for (int i = 0; i < Genotype.Length - 1; i++)
             {
-                trackLength += graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
+                trackLength += _graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
             }
-            trackLength += graph.GetWeightByRip(Genotype[0], Genotype[Genotype.Length - 1]);
+            trackLength += _graph.GetWeightByRip(Genotype[0], Genotype[Genotype.Length - 1]);
             return trackLength;
         }
 
         public override AbstractTrack EmptyClone()
         {
-            ClosedTrack track = new ClosedTrack(this.Genotype.Length, false);
+            ClosedTrack track = new ClosedTrack(this.Genotype.Length, _graph, false);
             return (AbstractTrack)track;
         }
         public override AbstractTrack Clone()
         {
-            UnclosedTrack track = new UnclosedTrack(this.Genotype);
+            ClosedTrack track = new ClosedTrack(this.Genotype, _graph);
             return (AbstractTrack)track;
         }
 
-        public override Dictionary<int, int> GetWorstRip(IGraph graph)
+        public override int Compare(object x, object y)
+        {
+            AbstractTrack x1 = (AbstractTrack) x;
+            AbstractTrack y1 = (AbstractTrack) y;
+            return x1.GetTrackLength().CompareTo(y1.GetTrackLength());
+        }
+
+        public override Dictionary<int, int> GetWorstRip()
         {
             double[,] rips = new double[Genotype.Length, 3];
             for (int i = 0; i < Genotype.Length - 1; i++)
             {
-                rips[i, 0] = graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
+                rips[i, 0] = _graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
                 rips[i, 1] = Genotype[i];
                 rips[i, 2] = Genotype[i + 1];
             }
-            rips[Genotype.Length - 1, 0] = graph.GetWeightByRip(Genotype[0], Genotype[Genotype.Length - 1]);
+            rips[Genotype.Length - 1, 0] = _graph.GetWeightByRip(Genotype[0], Genotype[Genotype.Length - 1]);
             rips[Genotype.Length - 1, 1] = Genotype[0];
             rips[Genotype.Length - 1, 2] = Genotype[Genotype.Length - 1];
             double max = rips[0, 0];
@@ -63,16 +71,16 @@ namespace GeneticEngine.Track
             dictionary.Add(1, Convert.ToInt32(rips[j, 2]));
             return dictionary;
         }
-        public override Dictionary<int, int> GetBestRip(IGraph graph)
+        public override Dictionary<int, int> GetBestRip()
         {
             double[,] rips = new double[Genotype.Length, 3];
             for (int i = 0; i < Genotype.Length - 1; i++)
             {
-                rips[i, 0] = graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
+                rips[i, 0] = _graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
                 rips[i, 1] = Genotype[i];
                 rips[i, 2] = Genotype[i + 1];
             }
-            rips[Genotype.Length - 1, 0] = graph.GetWeightByRip(Genotype[0], Genotype[Genotype.Length - 1]);
+            rips[Genotype.Length - 1, 0] = _graph.GetWeightByRip(Genotype[0], Genotype[Genotype.Length - 1]);
             rips[Genotype.Length - 1, 1] = Genotype[0];
             rips[Genotype.Length - 1, 2] = Genotype[Genotype.Length - 1];
             double min = rips[0, 0];
