@@ -48,14 +48,14 @@ namespace GeneticEngineTests.FitnessFunction
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            _parents = new AbstractTrack[2];
-            int[] trackPoints1 = new int[] { 0, 2, 1, 3 };
-            int[] trackPoints2 = new int[] { 1, 3, 0, 2 };
-            _parents[0] = new UnclosedTrack(trackPoints1);
-            _parents[1] = new UnclosedTrack(trackPoints2);
             int[,] ribs = new int[6, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
             double[] weights = new double[] { 3, 5, 10, 7, 8, 9 };
             _graph = new UndirectedConnectedGraph(ribs, weights);
+            _parents = new AbstractTrack[2];
+            int[] trackPoints1 = new int[] { 0, 2, 1, 3 };
+            int[] trackPoints2 = new int[] { 1, 3, 0, 2 };
+            _parents[0] = new UnclosedTrack(trackPoints1, _graph);
+            _parents[1] = new UnclosedTrack(trackPoints2, _graph);
         }
 
         /// <summary>

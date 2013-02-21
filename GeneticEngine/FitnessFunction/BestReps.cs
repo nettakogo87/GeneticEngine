@@ -25,7 +25,7 @@ namespace GeneticEngine.FitnessFunction
             double[] results = new double[abstractTracks.Length];
             for (int i = 0; i < abstractTracks.Length; i++)
             {
-                results[i] = abstractTracks[i].GetTrackLength(graph);
+                results[i] = abstractTracks[i].GetTrackLength();
             }
             double minTracksResult = results.Min();
 
