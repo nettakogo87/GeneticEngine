@@ -8,14 +8,9 @@ using GeneticEngine.Track;
 
 namespace GeneticEngine.Selection
 {
-    public class RouletteSelection : ISelection
+    public class RouletteSelection : AbstractSelection, ISelection
     {
-        private string _name;
-
-        public RouletteSelection()
-        {
-            _name = "RouletteSelection";
-        }
+        public const string SelectionName = "RouletteSelection";
 
         public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
@@ -48,16 +43,16 @@ namespace GeneticEngine.Selection
                     if (sum > fallenSector)
                     {
                         parentTracks[i] = allTracks[j];
+                        parentTracks[i].TypeOfSelection = SelectionName;
                         break;
                     }
                 }
             }
         }
 
-
         public string GetName()
         {
-            return _name;
+            return SelectionName;
         }
 
     }

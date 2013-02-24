@@ -7,8 +7,10 @@ using GeneticEngine.Track;
 
 namespace GeneticEngine.Selection
 {
-    public class RankingSelection : ISelection
+    public class RankingSelection : AbstractSelection, ISelection
     {
+        public const string SelectionName = "RankingSelection";
+
         public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
             int countOfTracks = parentTracks.Length;
@@ -22,12 +24,13 @@ namespace GeneticEngine.Selection
             for (int i = 0; i < countOfTracks; i++)
             {
                 parentTracks[i] = allTracks[i];
+                parentTracks[i].TypeOfSelection = SelectionName;
             }
         }
 
         public string GetName()
         {
-            return "RankingSelection";
+            return SelectionName;
         }
     }
 }
