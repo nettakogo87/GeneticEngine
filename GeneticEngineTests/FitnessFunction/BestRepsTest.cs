@@ -65,9 +65,8 @@ namespace GeneticEngineTests.FitnessFunction
         public void FitnessTrueTest()
         {
             int countOfReps = 5;
-            BestReps target = new BestReps(countOfReps); // TODO: инициализация подходящего значения
-            bool expected = false; // TODO: инициализация подходящего значения
-            bool actual = target.Fitness(_parents, _graph);
+            BestReps target = new BestReps(countOfReps);
+            bool actual = target.Fitness(_parents);
             Assert.IsTrue(actual);
             Assert.AreEqual( 1, target.ActualCountOfReps);
             Assert.AreEqual(20.0, target.BestResult);
@@ -80,9 +79,8 @@ namespace GeneticEngineTests.FitnessFunction
         public void FitnessFalseTest()
         {
             int countOfReps = 1;
-            BestReps target = new BestReps(countOfReps); // TODO: инициализация подходящего значения
-            bool expected = false; // TODO: инициализация подходящего значения
-            bool actual = target.Fitness(_parents, _graph);
+            BestReps target = new BestReps(countOfReps);
+            bool actual = target.Fitness(_parents);
             Assert.IsFalse(actual);
             Assert.AreEqual(1, target.ActualCountOfReps);
             Assert.AreEqual(20.0, target.BestResult);

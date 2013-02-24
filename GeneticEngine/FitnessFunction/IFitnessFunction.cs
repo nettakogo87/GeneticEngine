@@ -9,7 +9,7 @@ namespace GeneticEngine.FitnessFunction
 {
     public interface IFitnessFunction
     {
-        bool Fitness(AbstractTrack[] tracks, IGraph graph);
+        bool Fitness(AbstractTrack[] tracks);
         double BestResult { get; }
         int ActualCountOfReps { get; }
     }

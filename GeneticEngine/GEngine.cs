@@ -75,7 +75,7 @@ namespace GeneticEngine
         {
             Random random = new Random();
             AbstractTrack[] newGeneration = new AbstractTrack[_countOfPerson];
-            while (_fitnessFunction.Fitness(_tracks, _salesmanGraph))
+            while (_fitnessFunction.Fitness(_tracks))
             {
                 for (int i = 0; i < _countOfPerson; i++)
                 {
