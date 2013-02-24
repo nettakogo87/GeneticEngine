@@ -6,8 +6,10 @@ using GeneticEngine.Track;
 
 namespace GeneticEngine.Crossingover
 {
-    public class OnePointCrossingover : ICrossingover
+    public class OnePointCrossingover : AbstractCrossingover, ICrossingover
     {
+        public const string CrossingoverName = "OnePointCrossingover";
+
         public void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild, AbstractTrack secondChild)
         {
             int countOfAlleles = firstParent.Genotype.Length;
@@ -29,11 +31,13 @@ namespace GeneticEngine.Crossingover
                     secondChild.Genotype[k++] = firstParent.Genotype[i];
                 }
             }
+            firstChild.TypeOfCrossingover = CrossingoverName;
+            secondChild.TypeOfCrossingover = CrossingoverName;
         }
 
         public string GetName()
         {
-            return "OnePointCrossingover";
+            return CrossingoverName;
         }
     }
 }

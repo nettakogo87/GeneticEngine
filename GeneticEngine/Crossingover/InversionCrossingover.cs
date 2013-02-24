@@ -6,8 +6,10 @@ using GeneticEngine.Track;
 
 namespace GeneticEngine.Crossingover
 {
-    public class InversionCrossingover : ICrossingover
+    public class InversionCrossingover : AbstractCrossingover, ICrossingover
     {
+        public const string CrossingoverName = "InversionCrossingover";
+
         public void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild,
                                  AbstractTrack secondChild)
         {
@@ -42,11 +44,13 @@ namespace GeneticEngine.Crossingover
                 secondChild.Genotype[i] = secondChild.Genotype[j];
                 secondChild.Genotype[j] = buff;
             }
+            firstChild.TypeOfCrossingover = CrossingoverName;
+            secondChild.TypeOfCrossingover = CrossingoverName;
         }
 
         public string GetName()
         {
-            return "InversionCrossingover";
+            return CrossingoverName;
         }
     }
 }
