@@ -35,7 +35,7 @@ namespace GeneticEngineTests.Mutation
         [TestMethod()]
         public void MutationTest()
         {
-            NotRandomMutation target = new NotRandomMutation(_graph);
+            NotRandomMutation target = new NotRandomMutation();
             target.Mutation(_mutant);
             Assert.IsFalse(TwoIntArrayEquals(_mutant.Genotype, _subject.Genotype));
         }

@@ -8,6 +8,8 @@ namespace GeneticEngine.Mutation
 {
     public class FourPointMutation : IMutation
     {
+        public const string MutationName = "FourPointMutation";
+
         public void Mutation(AbstractTrack mutant)
         {
             int countOfAlleles = mutant.Genotype.Length;
@@ -34,11 +36,12 @@ namespace GeneticEngine.Mutation
             chromosome = mutant.Genotype[thirdPosition];
             mutant.Genotype[thirdPosition] = mutant.Genotype[fourthPosition];
             mutant.Genotype[fourthPosition] = chromosome;
+            mutant.TypeOfSelection = MutationName;
         }
 
         public string GetName()
         {
-            return "FourPointMutation";
+            return MutationName;
         }
     }
 }

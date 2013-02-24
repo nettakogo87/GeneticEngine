@@ -8,6 +8,8 @@ namespace GeneticEngine.Mutation
 {
     public class TwoPointMutation : IMutation
     {
+        public const string MutationName = "TwoPointMutation";
+
         public void Mutation(AbstractTrack mutant)
         {
             Random randomPosition = new Random();
@@ -20,11 +22,12 @@ namespace GeneticEngine.Mutation
             int chromosome = mutant.Genotype[secondPosition];
             mutant.Genotype[secondPosition] = mutant.Genotype[firstPosition];
             mutant.Genotype[firstPosition] = chromosome;
+            mutant.TypeOfSelection = MutationName;
         }
 
         public string GetName()
         {
-            return "TwoPointMutation";
+            return MutationName;
         }
     }
 }

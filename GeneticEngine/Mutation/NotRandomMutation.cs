@@ -9,11 +9,8 @@ namespace GeneticEngine.Mutation
 {
     public class NotRandomMutation : IMutation
     {
-        private IGraph _graph;
-        public NotRandomMutation(IGraph graph)
-        {
-            _graph = graph;
-        }
+        public const string MutationName = "NotRandomMutation";
+
         public void Mutation(AbstractTrack mutant)
         {
             int countOfAlleles = mutant.Genotype.Length;
@@ -37,6 +34,7 @@ namespace GeneticEngine.Mutation
                     }
                     mutant.Genotype[i] = mutant.Genotype[newPoint];
                     mutant.Genotype[newPoint] = firstGen;
+                    mutant.TypeOfSelection = MutationName;
                     break;
                 }
             }
@@ -44,7 +42,7 @@ namespace GeneticEngine.Mutation
 
         public string GetName()
         {
-            return "NotRandomMutation";
+            return MutationName;
         }
     }
 }
