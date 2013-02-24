@@ -82,7 +82,7 @@ namespace GeneticEngineTests.Selection
         public void SelectionTest()
         {
             TournamentSelection target = new TournamentSelection(); // TODO: инициализация подходящего значения
-            target.Selection(_parents, _childs, _graph);
+            target.Selection(_parents, _childs);
             Assert.IsTrue(TwoIntArrayEquals(_parents[0].Genotype, _expected[0].Genotype));
             Assert.IsTrue(TwoIntArrayEquals(_parents[1].Genotype, _expected[1].Genotype));
             Assert.IsTrue(TwoIntArrayEquals(_parents[2].Genotype, _expected[2].Genotype));

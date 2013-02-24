@@ -20,7 +20,7 @@ namespace GeneticEngine.Selection
             _selectionList.Add(new TournamentSelection());
         }
 
-        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
 
 //            _selectionList.ElementAt(1).Selection();

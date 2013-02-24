@@ -121,14 +121,14 @@ namespace GeneticEngine
                         }
                     }
                 }
-                this.Selection(_tracks, newGeneration, _salesmanGraph);
+                this.Selection(_tracks, newGeneration);
             }
         }
 
 
-        private void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph)
+        private void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
-            _tournamentSelection.Selection(parentTracks, childTracks, graph);
+            _tournamentSelection.Selection(parentTracks, childTracks);
         }
         private void Mutation(AbstractTrack mutant)
         {

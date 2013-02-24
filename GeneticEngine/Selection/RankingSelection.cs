@@ -9,7 +9,7 @@ namespace GeneticEngine.Selection
 {
     public class RankingSelection : ISelection
     {
-        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
             int countOfTracks = parentTracks.Length;
             AbstractTrack[] allTracks = new AbstractTrack[countOfTracks * 2];

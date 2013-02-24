@@ -9,7 +9,7 @@ namespace GeneticEngine.Selection
 {
     public class TournamentSelection : ISelection
     {
-        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
             for (int i = 0; i < parentTracks.Length; i++)
             {

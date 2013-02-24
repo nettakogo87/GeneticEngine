@@ -44,7 +44,7 @@ namespace GeneticEngineTests.Selection
         public void SelectionTest()
         {
             RouletteSelection target = new RouletteSelection();
-            target.Selection(_parents, _childs, _graph);
+            target.Selection(_parents, _childs);
             
         }
     }

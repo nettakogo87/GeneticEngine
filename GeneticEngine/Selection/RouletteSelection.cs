@@ -17,7 +17,7 @@ namespace GeneticEngine.Selection
             _name = "RouletteSelection";
         }
 
-        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks, IGraph graph)
+        public void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
             int countOfTracks = parentTracks.Length;
             AbstractTrack[] allTracks = new AbstractTrack[countOfTracks * 2];
