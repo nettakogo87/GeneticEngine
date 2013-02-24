@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GeneticEngine.Crossingover;
 using GeneticEngine.Graph;
+using GeneticEngine.Mutation;
+using GeneticEngine.Selection;
 
 namespace GeneticEngine.Track
 {
@@ -16,9 +19,9 @@ namespace GeneticEngine.Track
             Genotype = new int[trackPoints.Length];
             trackPoints.CopyTo(Genotype, 0);
             _graph = graph;
-            TypeOfCrossingover = "Not";
-            TypeOfMutation = "Not";
-            TypeOfSelection = "Not";
+            TypeOfCrossingover = AbstractCrossingover.WithoutCrossingover;
+            TypeOfMutation = AbstractMutation.WithoutMutation;
+            TypeOfSelection = AbstractSelection.WithoutSelection;
         }
 
         protected AbstractTrack(int countOfAllele, IGraph graph, bool autofill)
@@ -29,9 +32,9 @@ namespace GeneticEngine.Track
             {
                 Genotype[i] = AggregateOfGenotype;
             }
-            TypeOfCrossingover = "Not";
-            TypeOfMutation = "Not";
-            TypeOfSelection = "Not";
+            TypeOfCrossingover = AbstractCrossingover.WithoutCrossingover;
+            TypeOfMutation = AbstractMutation.WithoutMutation;
+            TypeOfSelection = AbstractSelection.WithoutSelection;
 
             if (autofill)
             {
