@@ -37,11 +37,10 @@ namespace GeneticEngine.Track
             return (AbstractTrack)track;
         }
 
-        public override int Compare(object x, object y)
+        public override int CompareTo(object obj)
         {
-            AbstractTrack x1 = (AbstractTrack) x;
-            AbstractTrack y1 = (AbstractTrack) y;
-            return x1.GetTrackLength().CompareTo(y1.GetTrackLength());
+            AbstractTrack track = (AbstractTrack) obj;
+            return this.GetTrackLength().CompareTo(track.GetTrackLength());
         }
 
         public override Dictionary<int, int> GetWorstRip()

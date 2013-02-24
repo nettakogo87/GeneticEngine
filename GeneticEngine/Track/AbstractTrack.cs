@@ -7,7 +7,7 @@ using GeneticEngine.Graph;
 
 namespace GeneticEngine.Track
 {
-    public abstract class AbstractTrack : IComparer
+    public abstract class AbstractTrack : IComparable
     {
         public const int AggregateOfGenotype = -1;
 
@@ -60,6 +60,6 @@ namespace GeneticEngine.Track
         public abstract AbstractTrack EmptyClone();
         public abstract AbstractTrack Clone();
 
-        public abstract int Compare(object x, object y);
+        public abstract int CompareTo(object obj);
     }
 }
