@@ -11,44 +11,9 @@ namespace GeneticEngineTests.Selection
     ///находиться все модульные тесты RankingSelectionTest
     ///</summary>
     [TestClass()]
-    public class RankingSelectionTest : SupportingGeneticEngineTest
+    public class RankingSelectionTest : SupportingSelectionTest
     {
-        #region Дополнительные атрибуты теста
-        // 
-        //При написании тестов можно использовать следующие дополнительные атрибуты:
-        //
-        //ClassInitialize используется для выполнения кода до запуска первого теста в классе
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //ClassCleanup используется для выполнения кода после завершения работы всех тестов в классе
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //TestInitialize используется для выполнения кода перед запуском каждого теста
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //TestCleanup используется для выполнения кода после завершения каждого теста
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-        private const int CountOfAllele = 4;
-        private const int CountOfTracks = 3;
-        private AbstractTrack[] _parents;
-        private AbstractTrack[] _childs;
         private AbstractTrack[] _expected;
-        private IGraph _graph;
 
         [TestInitialize()]
         public void MyTestInitialize()
@@ -85,6 +50,7 @@ namespace GeneticEngineTests.Selection
             Assert.IsTrue(TwoIntArrayEquals(_parents[0].Genotype, _expected[0].Genotype));
             Assert.IsTrue(TwoIntArrayEquals(_parents[1].Genotype, _expected[1].Genotype));
             Assert.IsTrue(TwoIntArrayEquals(_parents[2].Genotype, _expected[2].Genotype));
+            Assert.IsTrue(_parents[0].TypeOfSelection == RankingSelection.SelectionName);
         }
     }
 }

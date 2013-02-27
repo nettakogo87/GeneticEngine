@@ -11,14 +11,8 @@ namespace GeneticEngineTests.Selection
     ///находиться все модульные тесты RouletteSelectionTest
     ///</summary>
     [TestClass()]
-    public class RouletteSelectionTest
+    public class RouletteSelectionTest : SupportingSelectionTest
     {
-        private const int CountOfAllele = 4;
-        private const int CountOfTracks = 3;
-        private AbstractTrack[] _parents;
-        private AbstractTrack[] _childs;
-        private IGraph _graph;
-
         [TestInitialize()]
         public void MyTestInitialize()
         {
@@ -45,7 +39,7 @@ namespace GeneticEngineTests.Selection
         {
             RouletteSelection target = new RouletteSelection();
             target.Selection(_parents, _childs);
-            
+            Assert.IsTrue(_parents[0].TypeOfSelection == RouletteSelection.SelectionName);
         }
     }
 }
