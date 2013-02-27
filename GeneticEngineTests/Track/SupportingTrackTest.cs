@@ -13,6 +13,7 @@ namespace GeneticEngineTests.Track
         protected const int CountOfAllele = 4;
         protected AbstractTrack _track;
         protected IGraph _graph;
+        protected int[] _trackPoints = new int[] { 0, 2, 1, 3 };
 
         protected static bool NegativeNumber(int i)
         {
@@ -29,6 +30,17 @@ namespace GeneticEngineTests.Track
                 return true;
             }
             return false;
+        }
+        protected bool TwoIntArrayEquals(int[] firstArray, int[] secondArray)
+        {
+            for (int i = 0; i < firstArray.Length; i++)
+            {
+                if (firstArray[i] != secondArray[i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -2,6 +2,9 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using GeneticEngine.Crossingover;
+using GeneticEngine.Mutation;
+using GeneticEngine.Selection;
 using GeneticEngine.Track;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GeneticEngine.Graph;
@@ -30,8 +33,11 @@ namespace GeneticEngineTests.Track
             AbstractTrack track = new UnclosedTrack(CountOfAllele, _graph, true);
             Assert.IsTrue(track.Genotype.Length == CountOfAllele);
             Assert.IsTrue(track.Genotype[0] != track.Genotype[track.Genotype.Length - 1]);
-            Assert.IsTrue(!Array.Exists(track.Genotype, NegativeNumber));
-            Assert.IsTrue(!Array.Exists(track.Genotype, UpperLimitNumber));
+            Assert.IsFalse(Array.Exists(track.Genotype, NegativeNumber));
+            Assert.IsFalse(Array.Exists(track.Genotype, UpperLimitNumber));
+            Assert.IsTrue(track.TypeOfCrossingover == AbstractCrossingover.WithoutCrossingover);
+            Assert.IsTrue(track.TypeOfMutation == AbstractMutation.WithoutMutation);
+            Assert.IsTrue(track.TypeOfSelection == AbstractSelection.WithoutSelection);
         }
 
         /// <summary>
@@ -46,34 +52,54 @@ namespace GeneticEngineTests.Track
         }
 
         /// <summary>
-        ///Тест для EmptyClone
+        ///Тест для првоерки копирования объекта Пути, содержащего массив заполненный "-1".
         ///</summary>
         [TestMethod()]
         public void EmptyCloneTest()
         {
+            int[] expectedArray = new int[] { -1, -1, -1, -1 };
             string expected = "GeneticEngine.Track.UnclosedTrack";
             AbstractTrack actual = _track.EmptyClone();
             Assert.AreEqual(expected, actual.GetType().ToString());
+            Assert.IsTrue(TwoIntArrayEquals(expectedArray, actual.Genotype));
         }
 
         /// <summary>
-        ///Тест для GetWorstRip
+        ///Тест для првоерки копирования объекта Пути, содержащего тот же массив генов, что и исходный объект.
+        ///</summary>
+        [TestMethod()]
+        public void CloneTest()
+        {
+            string expected = "GeneticEngine.Track.UnclosedTrack";
+            AbstractTrack actual = _track.Clone();
+            Assert.AreEqual(expected, actual.GetType().ToString());
+            Assert.IsTrue(TwoIntArrayEquals(_trackPoints, actual.Genotype));
+        }
+
+        /// <summary>
+        ///Тест для получения наиболее "тяжелого" ребра из объекта "Пути"
         ///</summary>
         [TestMethod()]
         public void GetWorstRipTest()
         {
+            // "тяжелое" ребро состоит из двух вершин:
+            int firstBadPiont = 1;
+            int secondBadPiont = 3;
             Dictionary<int, int> actual = _track.GetWorstRip();
-            Assert.IsTrue(actual.ContainsValue(1) && actual.ContainsValue(3));
+            Assert.IsTrue(actual.ContainsValue(firstBadPiont) && actual.ContainsValue(secondBadPiont));
         }
 
         /// <summary>
-        ///Тест для GetBestRip
+        ///Тест для получения наиболее "легкого" ребра из объекта "Пути"
         ///</summary>
         [TestMethod()]
         public void GetBestRipTest()
         {
+            // "легкое" ребро состоит из двух вершин:
+            int firstBadPiont = 0;
+            int secondBadPiont = 2;
             Dictionary<int, int> actual = _track.GetBestRip();
-            Assert.IsTrue(actual.ContainsValue(0) && actual.ContainsValue(2));
+            Assert.IsTrue(actual.ContainsValue(firstBadPiont) && actual.ContainsValue(secondBadPiont));
         }
     }
 }
