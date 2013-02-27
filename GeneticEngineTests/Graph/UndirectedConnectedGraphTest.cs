@@ -6,42 +6,12 @@ using System.Collections.Generic;
 namespace GeneticEngineTests.Graph
 {
     /// <summary>
-    ///Это класс теста для GraphTest, в котором должны
-    ///находиться все модульные тесты GraphTest
+    ///Это класс теста для UndirectedConnectedGraphTest, в котором должны
+    ///находиться все модульные тесты UndirectedConnectedGraphTest
     ///</summary>
     [TestClass()]
-    public class GraphTest
+    public class UndirectedConnectedGraphTest
     {
-        #region Дополнительные атрибуты теста
-        // 
-        //При написании тестов можно использовать следующие дополнительные атрибуты:
-        //
-        //ClassInitialize используется для выполнения кода до запуска первого теста в классе
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //ClassCleanup используется для выполнения кода после завершения работы всех тестов в классе
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //TestInitialize используется для выполнения кода перед запуском каждого теста
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //TestCleanup используется для выполнения кода после завершения каждого теста
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
         private int[,] _ribs;
         private double[] _weights;
         private UndirectedConnectedGraph _target;

@@ -7,13 +7,13 @@ namespace GeneticEngine.Graph
 {
     public class UndirectedConnectedGraph : IGraph
     {
-        private const int FirstPintAndSecondPointAndWeight = 3;
+        private const int FirstPointAndSecondPointAndWeight = 3; // двумерный массив ребер и весов. Сначала идет начало ребра и конец, потом вес.
         private double[,] _ribsAndWeights;
         public int CountOfWeight { get; set; }
         public UndirectedConnectedGraph(int[,] ribs, double[] weights)
         {
             CountOfWeight = weights.Length;
-            _ribsAndWeights = new double[CountOfWeight, FirstPintAndSecondPointAndWeight];
+            _ribsAndWeights = new double[CountOfWeight, FirstPointAndSecondPointAndWeight];
             for (int i = 0; i < CountOfWeight; i++)
             {
                 _ribsAndWeights[i, 0] = ribs[i, 0];
