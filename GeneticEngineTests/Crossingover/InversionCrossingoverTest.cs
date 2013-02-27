@@ -11,15 +11,8 @@ namespace GeneticEngineTests.Crossingover
     ///находиться все модульные тесты InversionCrossingoverTest
     ///</summary>
     [TestClass()]
-    public class InversionCrossingoverTest
+    public class InversionCrossingoverTest : SupportingCrossingoverTest
     {
-        private const int CountOfAllele = 4;
-        private AbstractTrack _parent1;
-        private AbstractTrack _parent2;
-        private AbstractTrack _child1;
-        private AbstractTrack _child2;
-        private IGraph _graph;
-
         [TestInitialize()]
         public void MyTestInitialize()
         {
@@ -44,15 +37,9 @@ namespace GeneticEngineTests.Crossingover
             target.Crossingover(_parent1, _parent2, _child1, _child2);
             Assert.IsTrue(!Array.Exists(_child1.Genotype, NegativeNumber));
             Assert.IsTrue(!Array.Exists(_child2.Genotype, NegativeNumber));
-        }
-
-        private static bool NegativeNumber(int i)
-        {
-            if (i < 0)
-            {
-                return true;
-            }
-            return false;
+            Assert.IsFalse(TwoIntArrayEquals(_child1.Genotype, _child2.Genotype));
+            Assert.IsTrue(IsItemsUnique(_child1.Genotype));
+            Assert.IsTrue(IsItemsUnique(_child2.Genotype));
         }
     }
 }
