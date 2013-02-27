@@ -11,13 +11,8 @@ namespace GeneticEngineTests.Mutation
     ///находиться все модульные тесты FourPointMutationTest
     ///</summary>
     [TestClass()]
-    public class FourPointMutationTest : SupportingGeneticEngineTest
+    public class FourPointMutationTest : SupportingMutationTest
     {
-        private const int CountOfAllele = 4;
-        private AbstractTrack _mutant;
-        private IGraph _graph;
-        private AbstractTrack _subject;
-
         [TestInitialize()]
         public void MyTestInitialize()
         {
@@ -39,6 +34,8 @@ namespace GeneticEngineTests.Mutation
             FourPointMutation target = new FourPointMutation();
             target.Mutation(_mutant);
             Assert.IsFalse(TwoIntArrayEquals(_mutant.Genotype, _subject.Genotype));
+            Assert.IsTrue(IsItemsUnique(_mutant.Genotype));
+            Assert.IsTrue(_mutant.TypeOfSelection == FourPointMutation.MutationName);
         }
     }
 }

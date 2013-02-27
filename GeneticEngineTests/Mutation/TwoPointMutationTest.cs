@@ -1,17 +1,17 @@
-﻿using GeneticEngine.Mutation;
+﻿using GeneticEngine.Graph;
+using GeneticEngine.Mutation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using GeneticEngine.Graph;
 using GeneticEngine.Track;
 
 namespace GeneticEngineTests.Mutation
 {
     /// <summary>
-    ///Это класс теста для NotRandomMutationTest, в котором должны
-    ///находиться все модульные тесты NotRandomMutationTest
+    ///Это класс теста для TwoPointMutationTest, в котором должны
+    ///находиться все модульные тесты TwoPointMutationTest
     ///</summary>
     [TestClass()]
-    public class NotRandomMutationTest : SupportingMutationTest
+    public class TwoPointMutationTest : SupportingMutationTest
     {
         [TestInitialize()]
         public void MyTestInitialize()
@@ -30,11 +30,11 @@ namespace GeneticEngineTests.Mutation
         [TestMethod()]
         public void MutationTest()
         {
-            NotRandomMutation target = new NotRandomMutation();
+            TwoPointMutation target = new TwoPointMutation();
             target.Mutation(_mutant);
             Assert.IsFalse(TwoIntArrayEquals(_mutant.Genotype, _subject.Genotype));
             Assert.IsTrue(IsItemsUnique(_mutant.Genotype));
-            Assert.IsTrue(_mutant.TypeOfSelection == NotRandomMutation.MutationName);
+            Assert.IsTrue(_mutant.TypeOfSelection == TwoPointMutation.MutationName);
         }
     }
 }
