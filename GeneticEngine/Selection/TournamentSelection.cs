@@ -18,8 +18,8 @@ namespace GeneticEngine.Selection
                 if (parentTracks[i].GetTrackLength() > childTracks[i].GetTrackLength())
                 {
                     parentTracks[i] = childTracks[i];
-                    parentTracks[i].TypeOfSelection = SelectionName;
                 }
+                parentTracks[i].TypeOfSelection = SelectionName;
             }
         }
 
