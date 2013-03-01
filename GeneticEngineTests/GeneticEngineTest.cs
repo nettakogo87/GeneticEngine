@@ -87,6 +87,28 @@ namespace GeneticEngineTests
         }
 
         /// <summary>
+        ///Тест для Run и фитнесфункции заключающейся в достижении заданного лучшего результата.
+        ///</summary>
+        [TestMethod()]
+        public void RunReachWantedResultTest()
+        {
+            _mutation = new NotRandomMutation();
+            _selection = new TournamentSelection();
+            _crossingover = new CyclicalCrossingover();
+
+            int wantedResult = 25;
+            IFitnessFunction fitnessFunction = new ReachWantedResult(wantedResult);
+            int pCrossingover = 80;
+            int pMutation = 60;
+            Array.Sort(_closedTracks);
+            double preBestResult = _closedTracks[0].GetTrackLength();
+            GEngine target = new GEngine(_closedTracks, pCrossingover, pMutation, fitnessFunction, _mutation, _crossingover, _selection);
+            target.Run();
+            Assert.AreEqual(wantedResult, target.FitnessFunction.BestResult);
+            Assert.IsTrue(preBestResult > target.FitnessFunction.BestResult);
+        }
+
+        /// <summary>
         ///Тест для Run и фитнесфункции заключающейся в достижении заданного количества повоторений лучшего результата.
         ///</summary>
         [TestMethod()]
