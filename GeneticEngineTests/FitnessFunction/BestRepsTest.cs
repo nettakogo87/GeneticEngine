@@ -13,35 +13,6 @@ namespace GeneticEngineTests.FitnessFunction
     [TestClass()]
     public class BestRepsTest
     {
-        #region Дополнительные атрибуты теста
-        // 
-        //При написании тестов можно использовать следующие дополнительные атрибуты:
-        //
-        //ClassInitialize используется для выполнения кода до запуска первого теста в классе
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //ClassCleanup используется для выполнения кода после завершения работы всех тестов в классе
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //TestInitialize используется для выполнения кода перед запуском каждого теста
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //TestCleanup используется для выполнения кода после завершения каждого теста
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
         private AbstractTrack[] _parents;
         private IGraph _graph;
 
@@ -82,7 +53,7 @@ namespace GeneticEngineTests.FitnessFunction
             BestReps target = new BestReps(countOfReps);
             bool actual = target.Fitness(_parents);
             Assert.IsFalse(actual);
-            Assert.AreEqual(1, target.ActualCountOfReps);
+            Assert.AreEqual(countOfReps, target.ActualCountOfReps);
             Assert.AreEqual(20.0, target.BestResult);
         }
     }
