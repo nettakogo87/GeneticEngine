@@ -13,29 +13,11 @@ namespace GeneticEngine
 {
     public class GEngine
     {
-        public ICrossingover OnePointCrossingover
-        {
-            get { return _onePointCrossingover; }
-        }
-
-        public IMutation TwoPointMutation
-        {
-            get { return _twoPointMutation; }
-        }
-
-        public ISelection TournamentSelection
-        {
-            get { return _tournamentSelection; }
-        }
+        public const int ProcentTreshhold = 100;
 
         public IFitnessFunction FitnessFunction
         {
             get { return _fitnessFunction; }
-        }
-
-        public IGraph SalesmanGraph
-        {
-            get { return _salesmanGraph; }
         }
 
         public AbstractTrack[] Tracks
@@ -43,43 +25,42 @@ namespace GeneticEngine
             get { return _tracks; }
         }
 
-        private ICrossingover _onePointCrossingover;
-        private IMutation _twoPointMutation;
-        private ISelection _tournamentSelection;
-        private IFitnessFunction _fitnessFunction;
+        private int _countOfPerson;
         private AbstractTrack[] _tracks;
-        private IGraph _salesmanGraph;
         private int _pMutation;
         private int _pCrossingover;
-        private int _countOfAllele;
-        private int _countOfPerson;
-        private string _typeOfTrack;
+        private IFitnessFunction _fitnessFunction;
+        private IMutation _mutation;
+        private ICrossingover _crossingover;
+        private ISelection _selection;
 
-        public GEngine(IGraph salesmanGraph, AbstractTrack[] tracks, int pCrossingover, int pMutation, IFitnessFunction fitnessFunction)
+        public GEngine(AbstractTrack[] tracks, int pCrossingover, int pMutation, IFitnessFunction fitnessFunction, IMutation mutation, ICrossingover crossingover, ISelection selection)
         {
             _countOfPerson = tracks.Length;
-            _salesmanGraph = salesmanGraph;
             _tracks = new AbstractTrack[_countOfPerson];
             _tracks = tracks;
             _pCrossingover = pCrossingover;
             _pMutation = pMutation;
-            _countOfAllele = _tracks[0].Genotype.Length;
-            _onePointCrossingover = new OnePointCrossingover();
-            _twoPointMutation = new TwoPointMutation();
-            _tournamentSelection = new TournamentSelection();
             _fitnessFunction = fitnessFunction;
+            _mutation = mutation;
+            _crossingover = crossingover;
+            _selection = selection;
         }
 
 
         public void Run()
         {
             Random random = new Random();
-            AbstractTrack[] newGeneration = new AbstractTrack[_countOfPerson];
             while (_fitnessFunction.Fitness(_tracks))
             {
+                AbstractTrack[] newGeneration = new AbstractTrack[_countOfPerson];
                 for (int i = 0; i < _countOfPerson; i++)
                 {
-                    int crossNotWillBe = random.Next(_pCrossingover);
+                    newGeneration[i] = _tracks[i].EmptyClone();
+                }
+                for (int i = 0; i < _countOfPerson; i++)
+                {
+                    int crossNotWillBe = random.Next(ProcentTreshhold);
                     if (_pCrossingover > crossNotWillBe)
                     {
                         int coupleIndex = random.Next(_countOfPerson - 1);
@@ -88,7 +69,7 @@ namespace GeneticEngine
                         this.Crossingover(_tracks[i], _tracks[coupleIndex], firstChild, secondChild);
                         if (firstChild.GetTrackLength() <= secondChild.GetTrackLength())
                         {
-                            int mutationNotWillBe = random.Next(_pMutation);
+                            int mutationNotWillBe = random.Next(ProcentTreshhold);
                             if (_pMutation > mutationNotWillBe)
                             {
                                 this.Mutation(firstChild);
@@ -97,7 +78,7 @@ namespace GeneticEngine
                         }
                         else
                         {
-                            int mutationNotWillBe = random.Next(_pMutation);
+                            int mutationNotWillBe = random.Next(ProcentTreshhold);
                             if (_pMutation > mutationNotWillBe)
                             {
                                 this.Mutation(secondChild);
@@ -107,17 +88,17 @@ namespace GeneticEngine
                     }
                     else
                     {
-                        int mutationNotWillBe = random.Next(_pMutation);
+                        int mutationNotWillBe = random.Next(ProcentTreshhold);
                         if (_pMutation > mutationNotWillBe)
                         {
                             AbstractTrack mutant = _tracks[i].EmptyClone();
-                            mutant.Genotype.CopyTo(_tracks[i].Genotype, 0);
+                            _tracks[i].Genotype.CopyTo(mutant.Genotype, 0);
                             this.Mutation(mutant);
                             newGeneration[i] = mutant;
                         }
                         else
                         {
-                            newGeneration[i].Genotype.CopyTo(_tracks[i].Genotype, 0);
+                            _tracks[i].Genotype.CopyTo(newGeneration[i].Genotype, 0);
                         }
                     }
                 }
@@ -128,15 +109,15 @@ namespace GeneticEngine
 
         private void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
         {
-            _tournamentSelection.Selection(parentTracks, childTracks);
+            _selection.Selection(parentTracks, childTracks);
         }
         private void Mutation(AbstractTrack mutant)
         {
-            _twoPointMutation.Mutation(mutant);
+            _mutation.Mutation(mutant);
         }
         private void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild, AbstractTrack secondChaild)
         {
-            _onePointCrossingover.Crossingover(firstParent, secondParent, firstChild, secondChaild);
+            _crossingover.Crossingover(firstParent, secondParent, firstChild, secondChaild);
         }
     }
 }

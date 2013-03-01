@@ -1,6 +1,9 @@
-﻿using GeneticEngine.FitnessFunction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using GeneticEngine.FitnessFunction;
+using GeneticEngine.Mutation;
+using GeneticEngine.Selection;
+using GeneticEngine.Crossingover;
 using GeneticEngine.Graph;
 using GeneticEngine.Track;
 using GeneticEngine;
@@ -12,15 +15,21 @@ namespace GeneticEngineTests
     ///находиться все модульные тесты GeneticEngineTest
     ///</summary>
     [TestClass()]
-    public class GeneticEngineTest
+    public class GeneticEngineTest : SupportingGeneticEngineTest
     {
         private AbstractTrack[] _closedTracks;
         private IGraph _graph;
-        
+        private IMutation _mutation;
+        private ISelection _selection;
+        private ICrossingover _crossingover;
+
 
         [TestInitialize()]
         public void MyTestInitialize()
         {
+            _mutation = new TwoPointMutation();
+            _selection = new RankingSelection();
+            _crossingover = new TwoPointCrossingover();
             int[,] ribs = new int[6, 2] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
             double[] weights = new double[] { 3, 5, 10, 7, 8, 9 };
             _graph = new UndirectedConnectedGraph(ribs, weights);
@@ -37,31 +46,39 @@ namespace GeneticEngineTests
 
 
         /// <summary>
-        ///Тест для Run
+        ///Тест для Run и фитнесфункции заключающейся в достижении заданного количества покалений.
         ///</summary>
         [TestMethod()]
         public void RunCounterTest()
         {
-            IFitnessFunction fitnessFunction = new GenerationCounter(100);
-            int pCrossingover = 80; // TODO: инициализация подходящего значения
-            int pMutation = 60; // TODO: инициализация подходящего значения
-            GEngine target = new GEngine(_graph, _closedTracks, pCrossingover, pMutation, fitnessFunction); // TODO: инициализация подходящего значения
+            int expectCountOfGeneration = 120;
+            IFitnessFunction fitnessFunction = new GenerationCounter(expectCountOfGeneration);
+            int pCrossingover = 80; 
+            int pMutation = 60; 
+            Array.Sort(_closedTracks);
+            double preBestResult = _closedTracks[0].GetTrackLength();
+            GEngine target = new GEngine(_closedTracks, pCrossingover, pMutation, fitnessFunction, _mutation, _crossingover, _selection);
             target.Run();
-            Assert.AreEqual(100, target.FitnessFunction.ActualCountOfReps);
+            Assert.AreEqual(expectCountOfGeneration, target.FitnessFunction.ActualCountOfReps);
+            Assert.IsTrue(preBestResult >= target.FitnessFunction.BestResult);
         }
 
         /// <summary>
-        ///Тест для Run
+        ///Тест для Run и фитнесфункции заключающейся в достижении заданного количества повоторений лучшего результата.
         ///</summary>
         [TestMethod()]
         public void RunBestRipsTest()
         {
-            IFitnessFunction fitnessFunction = new BestReps(13);
-            int pCrossingover = 80; // TODO: инициализация подходящего значения
-            int pMutation = 60; // TODO: инициализация подходящего значения
-            GEngine target = new GEngine(_graph, _closedTracks, pCrossingover, pMutation, fitnessFunction); // TODO: инициализация подходящего значения
+            int bestReps = 12;
+            IFitnessFunction fitnessFunction = new BestReps(bestReps);
+            int pCrossingover = 80; 
+            int pMutation = 60;
+            Array.Sort(_closedTracks);
+            double preBestResult = _closedTracks[0].GetTrackLength();
+            GEngine target = new GEngine(_closedTracks, pCrossingover, pMutation, fitnessFunction, _mutation, _crossingover, _selection);
             target.Run();
-            Assert.AreEqual(13, target.FitnessFunction.ActualCountOfReps);
+            Assert.AreEqual(bestReps, target.FitnessFunction.ActualCountOfReps);
+            Assert.IsTrue(preBestResult >= target.FitnessFunction.BestResult);
         }
     }
 }
