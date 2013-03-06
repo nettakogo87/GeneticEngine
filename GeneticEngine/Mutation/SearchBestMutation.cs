@@ -11,7 +11,6 @@ namespace GeneticEngine.Mutation
     {
         public const string MutationName = "SearchBestMutation";
         private List<ProxyMutation> _proxyMutationList;
-        private double _bestResult;
         private Random _random;
 
         public SearchBestMutation(List<ProxyMutation> proxyMutationList)
@@ -41,7 +40,7 @@ namespace GeneticEngine.Mutation
                 if (sum > fallenSector)
                 {
                     double currentResult = mutant.GetTrackLength();
-                    double oneProcentGain = currentResult/100;
+                    double oneProcentGain = currentResult / 100;
 
                     DateTime startTime = DateTime.Now;
                     _proxyMutationList[j].GetMutation().Mutation(mutant);
@@ -53,7 +52,7 @@ namespace GeneticEngine.Mutation
                     double procentGain;
                     if (newResult < currentResult)
                     {
-                        procentGain = 100 - newResult/oneProcentGain;
+                        procentGain = 100 - (newResult / oneProcentGain);
                         _proxyMutationList[j].AddGoodStart();
                     }
                     else
@@ -69,7 +68,7 @@ namespace GeneticEngine.Mutation
 
         public string GetName()
         {
-            throw new NotImplementedException();
+            return MutationName;
         }
     }
 }

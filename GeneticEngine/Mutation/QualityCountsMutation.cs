@@ -57,8 +57,5 @@ namespace GeneticEngine.Mutation
         {
             return MutationName;
         }
-
-        public int NumberOfStarts { get; set; }
-        public string OperationTime { get; set; }
     }
 }
