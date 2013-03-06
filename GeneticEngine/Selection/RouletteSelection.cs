@@ -21,7 +21,7 @@ namespace GeneticEngine.Selection
                 allTracks[i] = parentTracks[i].Clone();
                 allTracks[i + countOfTracks] = childTracks[i].Clone();
             }
-
+                                                                        // todo чето тут не так!!!!!!!!!!!!!!!!
             Random random = new Random();
             double sumOfFitness = 0;
             for (int i = 0; i < countOfTracks * 2; i++)

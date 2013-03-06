@@ -27,7 +27,7 @@ namespace GeneticEngine.Crossingover
                 {
                     if (!child.Genotype.Contains(firstParent.Genotype[i]))
                     {
-                        child.Genotype[k] = firstParent.Genotype[i];
+                        child.Genotype[k] = firstParent.Genotype[i]; // todo где то тут выход за пределы массива, но пока не обнаружен
                         k++;
                         m = i;
                         break;
