@@ -21,7 +21,7 @@ namespace GeneticEngine.ProxyOperation
             _mutation = mutation;
             _numberOfGoodStarts = 0;
             _numberOfBadStarts = 0;
-            _progress = 1;
+            _progress = 100;
         }
         public IMutation GetMutation()
         {
