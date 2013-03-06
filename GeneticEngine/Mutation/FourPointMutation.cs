@@ -6,7 +6,7 @@ using GeneticEngine.Track;
 
 namespace GeneticEngine.Mutation
 {
-    public class FourPointMutation : IMutation
+    public class FourPointMutation : AbstractMutation, IMutation
     {
         public const string MutationName = "FourPointMutation";
 

@@ -7,13 +7,12 @@ using GeneticEngine.Track;
 
 namespace GeneticEngine.Mutation
 {
-    public class NotRandomMutation : IMutation
+    public class NotRandomMutation : AbstractMutation, IMutation
     {
         public const string MutationName = "NotRandomMutation";
 
         public void Mutation(AbstractTrack mutant)
         {
-            int countOfAlleles = mutant.Genotype.Length;
             Dictionary<int, int> worstRip = mutant.GetWorstRip();
             DestroyBadRip(mutant, worstRip[0], worstRip[1]);
 
