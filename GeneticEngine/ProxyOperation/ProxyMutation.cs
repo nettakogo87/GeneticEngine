@@ -21,9 +21,8 @@ namespace GeneticEngine.ProxyOperation
             _mutation = mutation;
             _numberOfGoodStarts = 0;
             _numberOfBadStarts = 0;
-            _progress = 0;
+            _progress = 1;
         }
-
         public IMutation GetMutation()
         {
             return _mutation;
@@ -58,11 +57,15 @@ namespace GeneticEngine.ProxyOperation
         }
         public double GetProgress()
         {
-            return _progress;
+            if (0 != NumberOfStarts)
+            {
+                return _progress / Convert.ToDouble(NumberOfStarts);
+            }
+            return _progress;  // Если мутация еще не запускалась, возвращает 100% 
         }
         public void IncreaseProgress(double procentGain)
         {
-            _progress = (_progress + procentGain) / NumberOfStarts;
+            _progress = _progress + procentGain;
         }
         public string MutationName
         {
