@@ -33,6 +33,7 @@ namespace GeneticEngine
         private IMutation _mutation;
         private ICrossingover _crossingover;
         private ISelection _selection;
+        private TimeSpan _operationTime;
 
         public GEngine(AbstractTrack[] tracks, int pCrossingover, int pMutation, IFitnessFunction fitnessFunction, IMutation mutation, ICrossingover crossingover, ISelection selection)
         {
@@ -50,6 +51,7 @@ namespace GeneticEngine
 
         public void Run()
         {
+            DateTime startTime = DateTime.Now;
             Random random = new Random();
             while (_fitnessFunction.Fitness(_tracks))
             {
@@ -104,6 +106,8 @@ namespace GeneticEngine
                 }
                 this.Selection(_tracks, newGeneration);
             }
+            DateTime endTime = DateTime.Now;
+            _operationTime = endTime - startTime;
         }
 
 
@@ -118,6 +122,11 @@ namespace GeneticEngine
         private void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild, AbstractTrack secondChaild)
         {
             _crossingover.Crossingover(firstParent, secondParent, firstChild, secondChaild);
+        }
+
+        public TimeSpan GetOperationTime()
+        {
+            return _operationTime;
         }
     }
 }
