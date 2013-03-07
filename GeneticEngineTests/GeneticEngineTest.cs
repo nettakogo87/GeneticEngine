@@ -110,13 +110,13 @@ namespace GeneticEngineTests
         }
 
         /// <summary>
-        ///Тест для Run и фитнесфункции заключающейся в достижении заданного количества повоторений лучшего результата.
+        ///Тест для Run заключается в надежности работы алгоритма сревнения алгоритмов Мутации, Селекции и Скрещивания.
         ///</summary>
         [TestMethod()]
-        public void RunRundomsMethodsTest()
+        public void RunQualityCountsTest()
         {
             int wantedResult = 6;
-
+            int bestReps = 50;
             List<ProxyMutation> proxyMutations = new List<ProxyMutation>();
             proxyMutations.Add(new ProxyMutation(new NotRandomMutation()));
             proxyMutations.Add(new ProxyMutation(new FourPointMutation()));
@@ -136,14 +136,58 @@ namespace GeneticEngineTests
             proxyCrossingovers.Add(new ProxyCrossingover(new TwoPointCrossingover()));
             _crossingover = new QualityCountsCrossingover(proxyCrossingovers, wantedResult);
 
-            IFitnessFunction fitnessFunction = new ReachWantedResult(wantedResult);
-            int pCrossingover = 80;
-            int pMutation = 60;
+            IFitnessFunction fitnessFunction = new BestReps(bestReps);
+            int pCrossingover = 100;
+            int pMutation = 100;
             Array.Sort(_closedTracks);
             double preBestResult = _closedTracks[0].GetTrackLength();
             GEngine target = new GEngine(_closedTracks, pCrossingover, pMutation, fitnessFunction, _mutation, _crossingover, _selection);
             target.Run();
+            double progress1 = proxySelectios[0].GetProgress();
+            double progress2 = proxySelectios[1].GetProgress();
+            double progress3 = proxySelectios[2].GetProgress();
             Assert.IsTrue(preBestResult >= target.FitnessFunction.BestResult);
         }
+
+        /// <summary>
+        ///Тест для Run заключается в надежности работы алгоритма сревнения алгоритмов Мутации, Селекции и Скрещивания.
+        ///</summary>
+        [TestMethod()]
+        public void RunSearchBestTest()
+        {
+            int bestReps = 50;
+            int wantedResult = 6;
+            List<ProxyMutation> proxyMutations = new List<ProxyMutation>();
+            proxyMutations.Add(new ProxyMutation(new TwoPointMutation()));
+            proxyMutations.Add(new ProxyMutation(new FourPointMutation()));
+            proxyMutations.Add(new ProxyMutation(new NotRandomMutation()));
+            _mutation = new SearchBestMutation(proxyMutations);
+
+            List<ProxySelection> proxySelectios = new List<ProxySelection>();
+            proxySelectios.Add(new ProxySelection(new TournamentSelection()));
+            proxySelectios.Add(new ProxySelection(new RouletteSelection()));
+            proxySelectios.Add(new ProxySelection(new RankingSelection()));
+            _selection = new SearchBestSelection(proxySelectios);
+
+            List<ProxyCrossingover> proxyCrossingovers = new List<ProxyCrossingover>();
+            proxyCrossingovers.Add(new ProxyCrossingover(new CyclicalCrossingover()));
+            proxyCrossingovers.Add(new ProxyCrossingover(new InversionCrossingover()));
+            proxyCrossingovers.Add(new ProxyCrossingover(new OnePointCrossingover()));
+            proxyCrossingovers.Add(new ProxyCrossingover(new TwoPointCrossingover()));
+            _crossingover = new SearchBestCrossingover(proxyCrossingovers);
+
+            IFitnessFunction fitnessFunction = new BestReps(bestReps);
+            int pCrossingover = 100;
+            int pMutation = 100;
+            Array.Sort(_closedTracks);
+            double preBestResult = _closedTracks[0].GetTrackLength();
+            GEngine target = new GEngine(_closedTracks, pCrossingover, pMutation, fitnessFunction, _mutation, _crossingover, _selection);
+            target.Run();
+            double progress1 = proxySelectios[0].GetProgress();
+            double progress2 = proxySelectios[1].GetProgress();
+            double progress3 = proxySelectios[2].GetProgress();
+            Assert.IsTrue(preBestResult >= target.FitnessFunction.BestResult);
+        }
+
     }
 }
