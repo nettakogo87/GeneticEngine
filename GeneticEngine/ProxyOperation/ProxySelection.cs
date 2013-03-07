@@ -12,11 +12,13 @@ namespace GeneticEngine.ProxyOperation
         private int _numberOfGoodStarts;
         private int _numberOfBadStarts;
         private TimeSpan _operationTime;      // часы:минуты:секунды.милисекунды
+        private double _progress;
         public ProxySelection(ISelection selection)
         {
             _selection = selection;
             _numberOfGoodStarts = 0;
             _numberOfBadStarts = 0;
+            _progress = 100;
         }
 
         public ISelection GetSelection()
@@ -53,7 +55,17 @@ namespace GeneticEngine.ProxyOperation
         }
         public double GetProgress()
         {
-            return Convert.ToDouble(_numberOfGoodStarts)/(Convert.ToDouble(NumberOfStarts) / 100);
+            if (0 == NumberOfStarts)
+            {
+                return _progress;  // Если селекция еще не запускалась, возвращает 100% 
+            }
+            if (1 == NumberOfStarts)
+            {
+                double result = Convert.ToDouble(_numberOfGoodStarts + _progress) / (Convert.ToDouble(NumberOfStarts) / 100);
+                _progress = 0;
+                return result;
+            }
+            return Convert.ToDouble(_numberOfGoodStarts) / (Convert.ToDouble(NumberOfStarts) / 100);
         }
 
         public string SelectionName
