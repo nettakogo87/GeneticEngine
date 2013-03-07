@@ -50,9 +50,10 @@ namespace GeneticEngine.Selection
                 newParentTracks[i] = parentTracks[i].Clone();
             }
             Array.Sort(newParentTracks);
-            newParentTracks[0].GetTrackLength();
+            double sumOfParentTracks = newParentTracks.Sum(track => track.GetTrackLength());
             double newResult = newParentTracks[0].GetTrackLength();
-            if (0 == newResult.CompareTo(currentResult))
+            double sumOfBestResult = newResult * newParentTracks.Length;
+            if ((0 == newResult.CompareTo(currentResult)) && (0 != sumOfParentTracks.CompareTo(sumOfBestResult)))
             {
                 _proxySelectionList[_index].AddGoodStart();
             }
