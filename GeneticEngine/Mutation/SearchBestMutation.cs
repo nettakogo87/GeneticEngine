@@ -21,11 +21,7 @@ namespace GeneticEngine.Mutation
         }
         public void Mutation(AbstractTrack mutant)
         {
-            double sumOfProgress = 0;
-            for (int i = 0; i < _proxyMutationList.Count; i++)
-            {
-                sumOfProgress += _proxyMutationList[i].GetProgress();
-            }
+            double sumOfProgress = _proxyMutationList.Sum(proxyMutant => proxyMutant.GetProgress());
             double[] sectorsOfWheel = new double[_proxyMutationList.Count];
             for (int i = 0; i < _proxyMutationList.Count; i++)
             {
