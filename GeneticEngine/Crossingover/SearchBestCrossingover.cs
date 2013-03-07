@@ -23,7 +23,7 @@ namespace GeneticEngine.Crossingover
         public void Crossingover(AbstractTrack firstParent, AbstractTrack secondParent, AbstractTrack firstChild,
                                  AbstractTrack secondChild)
         {
-            double sumOfProgress = _proxyCrossingoverList.Sum(cross => cross.GetProgress());
+            double sumOfProgress = _proxyCrossingoverList.Sum(proxyCrossingover => proxyCrossingover.GetProgress());
             double[] sectorsOfWheel = new double[_proxyCrossingoverList.Count];
             for (int i = 0; i < _proxyCrossingoverList.Count; i++)
             {
