@@ -6,68 +6,25 @@ using GeneticEngine.Crossingover;
 
 namespace GeneticEngine.ProxyOperation
 {
-    public class ProxyCrossingover
+    public class ProxyCrossingover : AbstractProxy
     {
         private ICrossingover _crossingover;
-        private int _numberOfGoodStarts;
-        private int _numberOfBadStarts;
-        private TimeSpan _operationTime;      // часы:минуты:секунды.милисекунды
-        private double _progress;
         public ProxyCrossingover(ICrossingover crossingover)
         {
             _crossingover = crossingover;
             _numberOfGoodStarts = 0;
             _numberOfBadStarts = 0;
-            _progress = 100;
+            _progressList = new List<double> { OneHundredPercent };
+            _progress = OneHundredPercent;
         }
-
         public ICrossingover GetCrossingover()
         {
             return _crossingover;
         }
-        public int NumberOfStarts
-        {
-            get { return _numberOfGoodStarts + _numberOfBadStarts; }
-        }
-        public int NumberOfGoodStarts
-        {
-            get { return _numberOfGoodStarts; }
-        }
-        public void AddGoodStart()
-        {
-            _numberOfGoodStarts++;
-        }
-        public int NumberOfBadStarts
-        {
-            get { return _numberOfBadStarts; }
-        }
-        public void AddBadStart()
-        {
-            _numberOfBadStarts++;
-        }
-        public TimeSpan GetOperationTime()
-        {
-            return _operationTime;
-        }
-        public void AddOperationTime(TimeSpan time)
-        {
-            _operationTime += time;
-        }
-        public double GetProgress()
-        {
-            if (0 != NumberOfStarts)
-            {
-                return _progress / Convert.ToDouble(NumberOfStarts);
-            }
-            return _progress;  // Если мутация еще не запускалась, возвращает 100% 
-        }
         public void IncreaseProgress(double procentGain)
         {
-            _progress = _progress + procentGain;
-        }
-        public string CrossingoverName
-        {
-            get { return _crossingover.GetName(); }
+            _progressList.Add(procentGain);
+            _progress = _progressList.Sum() / Convert.ToDouble(NumberOfStarts); // Общую сумму прогрессов разделить на кол-во запусков.
         }
     }
 }
