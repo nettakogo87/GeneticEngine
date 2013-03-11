@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using GeneticEngine.Crossingover;
@@ -25,6 +26,7 @@ namespace GeneticEngine
             get { return _tracks; }
         }
 
+        private int _numberOfGenerations;
         private int _countOfPerson;
         private AbstractTrack[] _tracks;
         private int _pMutation;
@@ -34,6 +36,10 @@ namespace GeneticEngine
         private ICrossingover _crossingover;
         private ISelection _selection;
         private TimeSpan _operationTime;
+        private DateTime _startTime;
+        private DateTime _endTime;
+        private DB_GeneticsDataSet _geneticsDataSet;
+        private Guid _launchId; 
 
         public GEngine(AbstractTrack[] tracks, int pCrossingover, int pMutation, IFitnessFunction fitnessFunction, IMutation mutation, ICrossingover crossingover, ISelection selection)
         {
@@ -46,69 +52,85 @@ namespace GeneticEngine
             _mutation = mutation;
             _crossingover = crossingover;
             _selection = selection;
+            _geneticsDataSet = new DB_GeneticsDataSet();
+            _launchId = Guid.NewGuid();
         }
-
 
         public void Run()
         {
-            DateTime startTime = DateTime.Now;
+            DB_GeneticsDataSetTableAdapters.LaunchesTableAdapter LaunchTableAdapter =
+                new DB_GeneticsDataSetTableAdapters.LaunchesTableAdapter();
+            DB_GeneticsDataSet.LaunchesRow newLaunchRow = _geneticsDataSet.Launches.NewLaunchesRow();
+            newLaunchRow.Id = _launchId;
+            _startTime = DateTime.Now;
             Random random = new Random();
             while (_fitnessFunction.Fitness(_tracks))
             {
-                AbstractTrack[] newGeneration = new AbstractTrack[_countOfPerson];
-                for (int i = 0; i < _countOfPerson; i++)
+                _numberOfGenerations++;
+                foreach (AbstractTrack track in _tracks)
                 {
-                    newGeneration[i] = _tracks[i].EmptyClone();
+                    SaveTrack(track);
                 }
+                AbstractTrack[] newGeneration = new AbstractTrack[_countOfPerson];
                 for (int i = 0; i < _countOfPerson; i++)
                 {
                     int crossNotWillBe = random.Next(ProcentTreshhold);
                     if (_pCrossingover > crossNotWillBe)
                     {
+                        // Скрещивание
                         int coupleIndex = random.Next(_countOfPerson - 1);
                         AbstractTrack firstChild = _tracks[i].EmptyClone();
                         AbstractTrack secondChild = _tracks[i].EmptyClone();
+
                         this.Crossingover(_tracks[i], _tracks[coupleIndex], firstChild, secondChild);
+                        firstChild.FirstParent = _tracks[i].GetItem();
+                        firstChild.SecondParent = _tracks[coupleIndex].GetItem();
+                        secondChild.FirstParent = _tracks[i].GetItem();
+                        secondChild.SecondParent = _tracks[coupleIndex].GetItem();
+
+                        SaveTrack(secondChild);
+                        SaveTrack(firstChild);
+
                         if (firstChild.GetTrackLength() <= secondChild.GetTrackLength())
                         {
-                            int mutationNotWillBe = random.Next(ProcentTreshhold);
-                            if (_pMutation > mutationNotWillBe)
-                            {
-                                this.Mutation(firstChild);
-                            }
-                            newGeneration[i] = firstChild;
+                            MutationWrapper(firstChild, newGeneration, random, i);
                         }
                         else
                         {
-                            int mutationNotWillBe = random.Next(ProcentTreshhold);
-                            if (_pMutation > mutationNotWillBe)
-                            {
-                                this.Mutation(secondChild);
-                            }
-                            newGeneration[i] = secondChild;
+                            MutationWrapper(secondChild, newGeneration, random, i);
                         }
                     }
                     else
                     {
-                        int mutationNotWillBe = random.Next(ProcentTreshhold);
-                        if (_pMutation > mutationNotWillBe)
-                        {
-                            AbstractTrack mutant = _tracks[i].EmptyClone();
-                            _tracks[i].Genotype.CopyTo(mutant.Genotype, 0);
-                            this.Mutation(mutant);
-                            newGeneration[i] = mutant;
-                        }
-                        else
-                        {
-                            _tracks[i].Genotype.CopyTo(newGeneration[i].Genotype, 0);
-                        }
+                        AbstractTrack mutant = _tracks[i].Clone();
+                        MutationWrapper(mutant, newGeneration, random, i);
                     }
                 }
+                // Селекция
                 this.Selection(_tracks, newGeneration);
+                for (int i = 0; i < _tracks.Length; i++)
+                {
+                    SaveTrack(_tracks[i]);
+                }
             }
-            DateTime endTime = DateTime.Now;
-            _operationTime = endTime - startTime;
+            _endTime = DateTime.Now;
+            _operationTime = _endTime - _startTime;
+
+
+            newLaunchRow.StartTime = _startTime;
+            newLaunchRow.EndTime = _endTime;
+            newLaunchRow.OperationTime = _operationTime.ToString();
+            newLaunchRow.TypeOfMutation = _mutation.GetName();
+            newLaunchRow.TypeOfSelection = _selection.GetName();
+            newLaunchRow.TypeOfCrossingover = _crossingover.GetName();
+            newLaunchRow.FitnessFunction = _fitnessFunction.GetName();
+            newLaunchRow.NumberOfGenerations = _numberOfGenerations.ToString();
+            newLaunchRow.BestResult = FitnessFunction.BestResult.ToString();
+            _geneticsDataSet.Launches.Rows.Add(newLaunchRow);
+//            LaunchTableAdapter.Update(newLaunchRow);
+//            _geneticsDataSet.Launches.AcceptChanges();
         }
+
 
 
         private void Selection(AbstractTrack[] parentTracks, AbstractTrack[] childTracks)
@@ -127,6 +149,45 @@ namespace GeneticEngine
         public TimeSpan GetOperationTime()
         {
             return _operationTime;
+        }
+
+        private void MutationWrapper(AbstractTrack child, AbstractTrack[] newGeneration, Random random, int i)
+        {
+            child.TypeOfSelection = AbstractSelection.WithoutSelection;
+            child.TypeOfCrossingover = AbstractCrossingover.WithoutCrossingover;
+
+            int mutationNotWillBe = random.Next(ProcentTreshhold);
+            if (_pMutation > mutationNotWillBe)
+            {
+                // Мутация
+                this.Mutation(child);
+                newGeneration[i] = child;
+                SaveTrack(child);
+            }
+            else
+            {
+                newGeneration[i] = child;
+            }
+        }
+
+        private void SaveTrack(AbstractTrack track)
+        {
+            DB_GeneticsDataSet.PersonsRow newPersonRow = _geneticsDataSet.Persons.NewPersonsRow();
+            newPersonRow.Id = Guid.NewGuid();
+            newPersonRow.Item = track.GetItem();
+            newPersonRow.Track = track.Genotype.ToString();
+            newPersonRow.Length = track.GetTrackLength();
+            newPersonRow.TypeOfCrossingover = track.TypeOfCrossingover;
+            newPersonRow.TypeOfMutation = track.TypeOfMutation;
+            newPersonRow.TypeOfSelection = track.TypeOfSelection;
+            newPersonRow.NumberOfGeneration = _numberOfGenerations;
+            newPersonRow.FirstParent = track.FirstParent;
+            newPersonRow.SecondParent = track.SecondParent;
+            newPersonRow.Launch = _launchId;
+            newPersonRow.BestRip = track.GetBestRip().ToString();
+            newPersonRow.WorstRip = track.GetWorstRip().ToString();
+            newPersonRow.TypeOfTrack = track.GetTypeOfTrack();
+            _geneticsDataSet.Persons.Rows.Add(newPersonRow);
         }
     }
 }
