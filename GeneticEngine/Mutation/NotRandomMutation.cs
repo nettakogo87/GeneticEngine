@@ -33,7 +33,7 @@ namespace GeneticEngine.Mutation
                     }
                     mutant.Genotype[i] = mutant.Genotype[newPoint];
                     mutant.Genotype[newPoint] = firstGen;
-                    mutant.TypeOfSelection = MutationName;
+                    mutant.TypeOfMutation = MutationName;
                     break;
                 }
             }
