@@ -13,9 +13,12 @@ namespace GeneticEngine.Track
     public abstract class AbstractTrack : IComparable
     {
         public const int AggregateOfGenotype = -1;
+        protected static int Counter;
+        private int _item;
 
         protected AbstractTrack(int[] trackPoints, IGraph graph)
         {
+            _item = ++Counter;
             Genotype = new int[trackPoints.Length];
             trackPoints.CopyTo(Genotype, 0);
             _graph = graph;
@@ -26,6 +29,7 @@ namespace GeneticEngine.Track
 
         protected AbstractTrack(int countOfAllele, IGraph graph, bool autofill)
         {
+            _item = ++Counter;
             _graph = graph;
             Genotype = new int[countOfAllele];
             for (int i = 0; i < countOfAllele; i++)
@@ -51,12 +55,25 @@ namespace GeneticEngine.Track
             }
         }
 
+        public int GetItem()
+        {
+            return _item;
+        }
+
+        public int FirstParent { get; set; }
+        public int SecondParent { get; set; }
+
         protected IGraph _graph;
+
         public int[] Genotype { get; set; }
+
         public string TypeOfSelection { get; set; }
+
         public string TypeOfMutation { get; set; }
+
         public string TypeOfCrossingover { get; set; }
 
+        public abstract string GetTypeOfTrack();
         public abstract double GetTrackLength();
         public abstract Dictionary<int, int> GetWorstRip();
         public abstract Dictionary<int, int> GetBestRip();

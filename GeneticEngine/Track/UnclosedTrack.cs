@@ -9,6 +9,8 @@ namespace GeneticEngine.Track
 {
     public class UnclosedTrack : AbstractTrack
     {
+        public const string TypeOfTrack = "UnclosedTrack";
+
         public UnclosedTrack(int[] trackPoints, IGraph graph)
             : base(trackPoints, graph)
         {
@@ -42,6 +44,8 @@ namespace GeneticEngine.Track
         public override AbstractTrack Clone()
         {
             UnclosedTrack track = new UnclosedTrack(this.Genotype, _graph);
+            track.FirstParent = this.FirstParent;
+            track.SecondParent = this.SecondParent;
             return (AbstractTrack)track;
         }
 
@@ -92,6 +96,11 @@ namespace GeneticEngine.Track
             dictionary.Add(0, Convert.ToInt32(rips[j, 1]));
             dictionary.Add(1, Convert.ToInt32(rips[j, 2]));
             return dictionary;
+        }
+
+        public override string GetTypeOfTrack()
+        {
+            return TypeOfTrack;
         }
     }
 }
