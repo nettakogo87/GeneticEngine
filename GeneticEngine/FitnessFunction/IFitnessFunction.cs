@@ -12,5 +12,6 @@ namespace GeneticEngine.FitnessFunction
         bool Fitness(AbstractTrack[] tracks);
         double BestResult { get; }
         int ActualCountOfReps { get; }
+        string GetName();
     }
 }

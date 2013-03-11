@@ -41,5 +41,10 @@ namespace GeneticEngine.FitnessFunction
         {
             get { return _actualCountOfReps; }
         }
+
+        public string GetName()
+        {
+            return "ReachWantedResult";
+        }
     }
 }
