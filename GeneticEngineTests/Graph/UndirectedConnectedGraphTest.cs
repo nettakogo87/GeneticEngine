@@ -19,8 +19,8 @@ namespace GeneticEngineTests.Graph
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            _ribs = new int[6, 2] { { 1, 2 }, { 1, 3 }, { 1, 4 }, { 2, 3 }, { 2, 4 }, { 3, 4 }, }; // TODO: инициализация подходящего значения
-            _weights = new double[] { 3, 5, 10, 7, 8, 9 }; // TODO: инициализация подходящего значения
+            _ribs = new int[6, 2] { { 1, 2 }, { 1, 3 }, { 1, 4 }, { 2, 3 }, { 2, 4 }, { 3, 4 }, }; 
+            _weights = new double[] { 3, 5, 10, 7, 8, 9 }; 
             _target = new UndirectedConnectedGraph(_ribs, _weights);
         }
 
@@ -30,7 +30,7 @@ namespace GeneticEngineTests.Graph
         [TestMethod()]
         public void GraphConstructorTest()
         {
-            double actual = _target.CountOfWeight;
+            double actual = _target.CountOfRibs;
             double expected = _weights.Length;
             Assert.AreEqual(expected, actual);
         }
@@ -55,6 +55,23 @@ namespace GeneticEngineTests.Graph
             actual = _target.GetWeightByRip(startPoint, endPoint);
             expected = 0;
             Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///Тест для GetRib
+        ///</summary>
+        [TestMethod()]
+        public void GetRibTest()
+        {
+            int indexOfRip = 2;
+            Rib rib = _target.GetRib(2);
+            int actual = rib.StartNode;
+            int expected = 1;
+            Assert.AreEqual(expected, actual);
+            actual = rib.EndNode;
+            expected = 4;
+            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(10, rib.Weight);
         }
     }
 }

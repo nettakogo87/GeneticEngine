@@ -8,6 +8,7 @@ namespace GeneticEngine.Graph
     public interface IGraph
     {
         double GetWeightByRip(int startPoint, int endPoint);
-        int CountOfWeight { get; set; }
+        Rib GetRib(int index);
+        int CountOfRibs { get; set; }
     }
 }

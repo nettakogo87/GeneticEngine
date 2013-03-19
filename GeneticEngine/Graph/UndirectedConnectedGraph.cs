@@ -5,35 +5,45 @@ using System.Text;
 
 namespace GeneticEngine.Graph
 {
+    [Serializable()]
     public class UndirectedConnectedGraph : IGraph
     {
-        private const int FirstPointAndSecondPointAndWeight = 3; // двумерный массив ребер и весов. Сначала идет начало ребра и конец, потом вес.
-        private double[,] _ribsAndWeights;
-        public int CountOfWeight { get; set; }
+        private List<Rib> _ribs;
+        public int CountOfRibs { get; set; }
+
         public UndirectedConnectedGraph(int[,] ribs, double[] weights)
         {
-            CountOfWeight = weights.Length;
-            _ribsAndWeights = new double[CountOfWeight, FirstPointAndSecondPointAndWeight];
-            for (int i = 0; i < CountOfWeight; i++)
+            CountOfRibs = weights.Length;
+            _ribs = new List<Rib>();
+            for (int i = 0; i < CountOfRibs; i++)
             {
-                _ribsAndWeights[i, 0] = ribs[i, 0];
-                _ribsAndWeights[i, 1] = ribs[i, 1];
-                _ribsAndWeights[i, 2] = weights[i];
+                _ribs.Add(new Rib(ribs[i, 0], ribs[i, 1], weights[i]));
             }
+        }
+
+        public UndirectedConnectedGraph(List<Rib> ribs)
+        {
+            CountOfRibs = ribs.Count;
+            _ribs = ribs;
         }
 
         public double GetWeightByRip(int startPoint, int endPoint)
         {
-            for (int i = 0; i < CountOfWeight; i++)
+            for (int i = 0; i < CountOfRibs; i++)
             {
-                int key1 =Convert.ToInt32(_ribsAndWeights[i, 0]);
-                int key2 =Convert.ToInt32(_ribsAndWeights[i, 1]);
+                int key1 = _ribs[i].StartNode;
+                int key2 = _ribs[i].EndNode;
                 if ((key1 == startPoint && key2 == endPoint) || (key2 == startPoint && key1 == endPoint))
                 {
-                    return _ribsAndWeights[i, 2];
+                    return _ribs[i].Weight;
                 }
             }
             return 0;
+        }
+
+        public Rib GetRib(int index)
+        {
+            return _ribs[index];
         }
     }
 }
