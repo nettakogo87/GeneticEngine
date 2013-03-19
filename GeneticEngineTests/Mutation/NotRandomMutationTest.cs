@@ -34,7 +34,7 @@ namespace GeneticEngineTests.Mutation
             target.Mutation(_mutant);
             Assert.IsFalse(TwoIntArrayEquals(_mutant.Genotype, _subject.Genotype));
             Assert.IsTrue(IsItemsUnique(_mutant.Genotype));
-            Assert.IsTrue(_mutant.TypeOfSelection == NotRandomMutation.MutationName);
+            Assert.IsTrue(_mutant.TypeOfMutation == NotRandomMutation.MutationName);
         }
     }
 }
