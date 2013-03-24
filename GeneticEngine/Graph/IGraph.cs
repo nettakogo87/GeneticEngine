@@ -9,6 +9,8 @@ namespace GeneticEngine.Graph
     {
         double GetWeightByRip(int startPoint, int endPoint);
         Rib GetRib(int index);
+        void SetRib(int index, Rib newRib);
         int CountOfRibs { get; set; }
+        int CountOfNode { get; set; }
     }
 }
