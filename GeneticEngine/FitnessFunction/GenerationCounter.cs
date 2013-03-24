@@ -9,6 +9,7 @@ namespace GeneticEngine.FitnessFunction
 {
     public class GenerationCounter : IFitnessFunction
     {
+        public const string FitnessFunctionName = "GenerationCounter";
         private int _specifiedCountOfReps;
         private int _actualCountOfReps;
         private double _bestResult;
@@ -48,7 +49,7 @@ namespace GeneticEngine.FitnessFunction
 
         public string GetName()
         {
-            return "GenerationCounter";
+            return FitnessFunctionName;
         }
     }
 }

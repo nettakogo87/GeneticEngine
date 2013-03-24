@@ -9,6 +9,8 @@ namespace GeneticEngine.FitnessFunction
 {
     public class BestReps : IFitnessFunction
     {
+        public const string FitnessFunctionName = "BestReps";
+        
         private int _specifiedCountOfReps;
         private int _actualCountOfReps;
         private double _bestResult;
@@ -57,7 +59,7 @@ namespace GeneticEngine.FitnessFunction
 
         public string GetName()
         {
-            return "BestReps";
+            return FitnessFunctionName;
         }
     }
 }

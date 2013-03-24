@@ -8,6 +8,8 @@ namespace GeneticEngine.FitnessFunction
 {
     public class ReachWantedResult : IFitnessFunction
     {
+        public const string FitnessFunctionName = "ReachWantedResult";
+
         private int _actualCountOfReps;
         private double _bestResult;
         public ReachWantedResult(double wantedBestResult)
@@ -44,7 +46,7 @@ namespace GeneticEngine.FitnessFunction
 
         public string GetName()
         {
-            return "ReachWantedResult";
+            return FitnessFunctionName;
         }
     }
 }
