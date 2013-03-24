@@ -18,8 +18,8 @@ namespace GeneticEngine.Selection
             AbstractTrack[] allTracks = new AbstractTrack[countOfTracks * 2];
             for (int i = 0; i < countOfTracks; i++)
             {
-                allTracks[i] = parentTracks[i].Clone();
-                allTracks[i + countOfTracks] = childTracks[i].Clone();
+                allTracks[i] = parentTracks[i];
+                allTracks[i + countOfTracks] = childTracks[i];
             }
                                                                         // todo чето тут не так!!!!!!!!!!!!!!!!
             Random random = new Random();
