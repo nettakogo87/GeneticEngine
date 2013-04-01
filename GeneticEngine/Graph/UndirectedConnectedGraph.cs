@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
+using GeneticEngine.Exceptions;
 
 namespace GeneticEngine.Graph
 {
@@ -47,27 +47,31 @@ namespace GeneticEngine.Graph
             _ribs = ribs;
         }
 
-        public double GetWeightByRip(int startPoint, int endPoint)
+        public Rib GetRibByNodes(int startNode, int endNode)
         {
             for (int i = 0; i < CountOfRibs; i++)
             {
                 int key1 = _ribs[i].StartNode;
                 int key2 = _ribs[i].EndNode;
-                if ((key1 == startPoint && key2 == endPoint) || (key2 == startPoint && key1 == endPoint))
+                if ((key1 == startNode && key2 == endNode) || (key2 == startNode && key1 == endNode))
                 {
-                    return _ribs[i].Weight;
+                    return _ribs[i];
                 }
             }
-            return 0;
+            throw new UnexistingRibException();
         }
 
-        public Rib GetRib(int index)
+        public Rib GetRibByIndex(int index)
         {
+            if (_ribs.Count() <= index || 0 > index)
+                throw new UnexistingRibException();
             return _ribs[index];
         }
 
         public void SetRib(int index, Rib newRib)
         {
+            if (_ribs.Count() <= index || 0 > index)
+                throw new UnexistingRibException();
             _ribs[index] = newRib;
         }
     }
