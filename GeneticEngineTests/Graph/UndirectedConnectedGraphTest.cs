@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using GeneticEngine.Exceptions;
 
 namespace GeneticEngineTests.Graph
 {
@@ -36,35 +37,40 @@ namespace GeneticEngineTests.Graph
         }
 
         /// <summary>
-        ///Тест для GetWeightByRip
+        ///Тест для GetRibByNodes
         ///</summary>
         [TestMethod()]
-        public void GetWeightByRipTest()
+        public void GeRibByNodesTest()
         {
             int startPoint = 4; 
             int endPoint = 1; 
             double expected = 10; 
             // если ребро существует, возвращает вес ребра.
-            double actual = _target.GetWeightByRip(startPoint, endPoint);
+            double actual = _target.GetRibByNodes(startPoint, endPoint).Weight;
             Assert.AreEqual(expected, actual);
-            actual = _target.GetWeightByRip(endPoint, startPoint);
+            actual = _target.GetRibByNodes(startPoint, endPoint).Weight;
             Assert.AreEqual(expected, actual);
             // если ребро не существует, возвращает 0.
             startPoint = _weights.Length + 1;
             endPoint = _weights.Length + 2;
-            actual = _target.GetWeightByRip(startPoint, endPoint);
-            expected = 0;
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                double puppet = _target.GetRibByNodes(startPoint, endPoint).Weight;
+            }
+            catch (UnexistingRibException ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(UnexistingRibException));
+            }
         }
 
         /// <summary>
-        ///Тест для GetRib
+        ///Тест для GetRibByIndex
         ///</summary>
         [TestMethod()]
-        public void GetRibTest()
+        public void GetRibByIndexTest()
         {
             int indexOfRip = 2;
-            Rib rib = _target.GetRib(2);
+            Rib rib = _target.GetRibByIndex(indexOfRip);
             int actual = rib.StartNode;
             int expected = 1;
             Assert.AreEqual(expected, actual);

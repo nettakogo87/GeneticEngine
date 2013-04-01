@@ -116,7 +116,7 @@ namespace GeneticEngineTests
         public void RunQualityCountsTest()
         {
             int wantedResult = 6;
-            int bestReps = 50;
+            int bestReps = 120;
             List<ProxyMutation> proxyMutations = new List<ProxyMutation>();
             proxyMutations.Add(new ProxyMutation(new NotRandomMutation()));
             proxyMutations.Add(new ProxyMutation(new FourPointMutation()));
@@ -125,8 +125,8 @@ namespace GeneticEngineTests
 
             List<ProxySelection> proxySelectios = new List<ProxySelection>();
             proxySelectios.Add(new ProxySelection(new TournamentSelection()));
-            proxySelectios.Add(new ProxySelection(new RouletteSelection()));
-            proxySelectios.Add(new ProxySelection(new RankingSelection()));
+//            proxySelectios.Add(new ProxySelection(new RouletteSelection()));
+//            proxySelectios.Add(new ProxySelection(new RankingSelection()));
             _selection = new QualityCountsSelection(proxySelectios);
 
             List<ProxyCrossingover> proxyCrossingovers = new List<ProxyCrossingover>();
@@ -144,8 +144,8 @@ namespace GeneticEngineTests
             GEngine target = new GEngine(_closedTracks, pCrossingover, pMutation, fitnessFunction, _mutation, _crossingover, _selection);
             target.Run();
             double progress1 = proxySelectios[0].GetProgress();
-            double progress2 = proxySelectios[1].GetProgress();
-            double progress3 = proxySelectios[2].GetProgress();
+//            double progress2 = proxySelectios[1].GetProgress();
+//            double progress3 = proxySelectios[2].GetProgress();
             Assert.IsTrue(preBestResult >= target.FitnessFunction.BestResult);
         }
 

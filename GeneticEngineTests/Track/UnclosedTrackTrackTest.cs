@@ -83,10 +83,9 @@ namespace GeneticEngineTests.Track
         public void GetWorstRipTest()
         {
             // "тяжелое" ребро состоит из двух вершин:
-            int firstBadPiont = 1;
-            int secondBadPiont = 3;
-            Dictionary<int, int> actual = _track.GetWorstRip();
-            Assert.IsTrue(actual.ContainsValue(firstBadPiont) && actual.ContainsValue(secondBadPiont));
+            Rib badRib = new Rib(1, 3, 8);
+            Rib actual = _track.GetWorstRib();
+            Assert.IsTrue(actual == badRib);
         }
 
         /// <summary>
@@ -96,10 +95,9 @@ namespace GeneticEngineTests.Track
         public void GetBestRipTest()
         {
             // "легкое" ребро состоит из двух вершин:
-            int firstBadPiont = 0;
-            int secondBadPiont = 2;
-            Dictionary<int, int> actual = _track.GetBestRip();
-            Assert.IsTrue(actual.ContainsValue(firstBadPiont) && actual.ContainsValue(secondBadPiont));
+            Rib bestRib = new Rib(0, 2, 5);
+            Rib actual = _track.GetBestRib();
+            Assert.IsTrue(actual == bestRib);
         }
     }
 }
