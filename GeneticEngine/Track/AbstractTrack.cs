@@ -75,8 +75,8 @@ namespace GeneticEngine.Track
 
         public abstract string GetTypeOfTrack();
         public abstract double GetTrackLength();
-        public abstract Dictionary<int, int> GetWorstRip();
-        public abstract Dictionary<int, int> GetBestRip();
+        public abstract Rib GetWorstRib();
+        public abstract Rib GetBestRib();
         public abstract AbstractTrack EmptyClone();
         public abstract AbstractTrack Clone();
 

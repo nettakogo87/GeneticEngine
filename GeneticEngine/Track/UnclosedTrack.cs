@@ -31,7 +31,7 @@ namespace GeneticEngine.Track
             double trackLength = 0;
             for (int i = 0; i < Genotype.Length - 1; i++)
             {
-                trackLength += _graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
+                trackLength += _graph.GetRibByNodes(Genotype[i], Genotype[i + 1]).Weight;
             }
             return trackLength;
         }
@@ -49,58 +49,58 @@ namespace GeneticEngine.Track
             return (AbstractTrack)track;
         }
 
-        public override Dictionary<int, int> GetWorstRip()
+        public override Rib GetWorstRib()
         {
-            double[,] rips = new double[Genotype.Length - 1, 3];
-            for (int i = 0; i < Genotype.Length - 1; i++)
+            Rib[] ribs = new Rib[Genotype.Length -1];
+            for (int i = 0; i < ribs.Length; i++)
             {
-                rips[i, 0] = _graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
-                rips[i, 1] = Genotype[i];
-                rips[i, 2] = Genotype[i + 1];
+                ribs[i] = _graph.GetRibByNodes(Genotype[i], Genotype[i + 1]);
             }
-            double max = rips[0, 0];
+            double max = ribs[0].Weight;
             int j = 0;
-            for (int i = 0; i < Genotype.Length - 1; i++)
+            for (int i = 0; i < ribs.Length; i++)
             {
-                if (max < rips[i, 0])
+                if (max < ribs[i].Weight)
                 {
-                    max = rips[i, 0];
+                    max = ribs[i].Weight;
                     j = i;
                 }
             }
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
-            dictionary.Add(0, Convert.ToInt32(rips[j, 1]));
-            dictionary.Add(1, Convert.ToInt32(rips[j, 2]));
-            return dictionary;
+            return ribs[j];
         }
-        public override Dictionary<int, int> GetBestRip()
+        public override Rib GetBestRib()
         {
-            double[,] rips = new double[Genotype.Length - 1, 3];
-            for (int i = 0; i < Genotype.Length - 1; i++)
+            Rib[] ribs = new Rib[Genotype.Length - 1];
+            for (int i = 0; i < ribs.Length; i++)
             {
-                rips[i, 0] = _graph.GetWeightByRip(Genotype[i], Genotype[i + 1]);
-                rips[i, 1] = Genotype[i];
-                rips[i, 2] = Genotype[i + 1];
+                ribs[i] = _graph.GetRibByNodes(Genotype[i], Genotype[i + 1]);
             }
-            double min = rips[0, 0];
+            double min = ribs[0].Weight;
             int j = 0;
-            for (int i = 0; i < Genotype.Length - 1; i++)
+            for (int i = 0; i < ribs.Length; i++)
             {
-                if (min > rips[i, 0])
+                if (min > ribs[i].Weight)
                 {
-                    min = rips[i, 0];
+                    min = ribs[i].Weight;
                     j = i;
                 }
             }
-            Dictionary<int, int> dictionary = new Dictionary<int, int>();
-            dictionary.Add(0, Convert.ToInt32(rips[j, 1]));
-            dictionary.Add(1, Convert.ToInt32(rips[j, 2]));
-            return dictionary;
+            return ribs[j];
         }
 
         public override string GetTypeOfTrack()
         {
             return TypeOfTrack;
+        }
+
+        public override string ToString()
+        {
+            string nodes = "";
+            for (int i = 0; i < Genotype.Length; i++)
+            {
+                nodes += Genotype[i].ToString() + " ";
+            }
+            return nodes;
         }
     }
 }
