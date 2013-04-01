@@ -7,6 +7,6 @@ namespace GeneticEngine.Selection
 {
     public abstract class AbstractSelection
     {
-        public const string WithoutSelection = "WithoutSelection";
+        public const string WithoutSelection = "Null";
     }
 }

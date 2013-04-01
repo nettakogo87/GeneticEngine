@@ -7,6 +7,6 @@ namespace GeneticEngine.Crossingover
 {
     public class AbstractCrossingover
     {
-        public const string WithoutCrossingover = "WithoutCrossingover";
+        public const string WithoutCrossingover = "Null";
     }
 }

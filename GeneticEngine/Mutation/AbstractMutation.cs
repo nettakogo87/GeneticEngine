@@ -7,6 +7,6 @@ namespace GeneticEngine.Mutation
 {
     public abstract class AbstractMutation
     {
-        public const string WithoutMutation = "WithoutMutation";
+        public const string WithoutMutation = "Null";
     }
 }
