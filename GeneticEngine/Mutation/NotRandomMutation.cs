@@ -13,9 +13,8 @@ namespace GeneticEngine.Mutation
 
         public void Mutation(AbstractTrack mutant)
         {
-            Dictionary<int, int> worstRip = mutant.GetWorstRip();
-            DestroyBadRip(mutant, worstRip[0], worstRip[1]);
-
+            Rib worstRib = mutant.GetWorstRib();
+            DestroyBadRip(mutant, worstRib.StartNode, worstRib.EndNode);
         }
 
         private static void DestroyBadRip(AbstractTrack mutant, int firstGen, int secondGen)
