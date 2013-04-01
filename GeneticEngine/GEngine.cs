@@ -39,7 +39,9 @@ namespace GeneticEngine
         private DateTime _startTime;
         private DateTime _endTime;
         private DB_GeneticsDataSet _geneticsDataSet;
-        private Guid _launchId; 
+        private Guid _launchId;
+        private DB_GeneticsDataSetTableAdapters.LaunchesTableAdapter _launchTableAdapter;
+        private DB_GeneticsDataSetTableAdapters.PersonsTableAdapter _personsTableAdapter;
 
         public GEngine(AbstractTrack[] tracks, int pCrossingover, int pMutation, IFitnessFunction fitnessFunction, IMutation mutation, ICrossingover crossingover, ISelection selection)
         {
@@ -54,15 +56,31 @@ namespace GeneticEngine
             _selection = selection;
             _geneticsDataSet = new DB_GeneticsDataSet();
             _launchId = Guid.NewGuid();
+            _launchTableAdapter = new DB_GeneticsDataSetTableAdapters.LaunchesTableAdapter();
+            _personsTableAdapter = new DB_GeneticsDataSetTableAdapters.PersonsTableAdapter();
         }
 
         public void Run()
         {
-            DB_GeneticsDataSetTableAdapters.LaunchesTableAdapter LaunchTableAdapter =
-                new DB_GeneticsDataSetTableAdapters.LaunchesTableAdapter();
             DB_GeneticsDataSet.LaunchesRow newLaunchRow = _geneticsDataSet.Launches.NewLaunchesRow();
             newLaunchRow.Id = _launchId;
             _startTime = DateTime.Now;
+
+
+            newLaunchRow.StartTime = _startTime;
+            newLaunchRow.EndTime = _startTime;
+            newLaunchRow.OperationTime = _startTime.ToString();
+            newLaunchRow.TypeOfMutation = _mutation.GetName();
+            newLaunchRow.TypeOfSelection = _selection.GetName();
+            newLaunchRow.TypeOfCrossingover = _crossingover.GetName();
+            newLaunchRow.FitnessFunction = _fitnessFunction.GetName();
+            newLaunchRow.NumberOfGenerations = "0";
+            newLaunchRow.BestResult = "0";
+            _geneticsDataSet.Launches.Rows.Add(newLaunchRow);
+            _launchTableAdapter.Update(newLaunchRow);
+            _geneticsDataSet.Launches.AcceptChanges();
+
+
             Random random = new Random();
             while (_fitnessFunction.Fitness(_tracks))
             {
@@ -116,19 +134,12 @@ namespace GeneticEngine
             _endTime = DateTime.Now;
             _operationTime = _endTime - _startTime;
 
-
-            newLaunchRow.StartTime = _startTime;
             newLaunchRow.EndTime = _endTime;
             newLaunchRow.OperationTime = _operationTime.ToString();
-            newLaunchRow.TypeOfMutation = _mutation.GetName();
-            newLaunchRow.TypeOfSelection = _selection.GetName();
-            newLaunchRow.TypeOfCrossingover = _crossingover.GetName();
-            newLaunchRow.FitnessFunction = _fitnessFunction.GetName();
             newLaunchRow.NumberOfGenerations = _numberOfGenerations.ToString();
             newLaunchRow.BestResult = FitnessFunction.BestResult.ToString();
-            _geneticsDataSet.Launches.Rows.Add(newLaunchRow);
-//            LaunchTableAdapter.Update(newLaunchRow);
-//            _geneticsDataSet.Launches.AcceptChanges();
+            _launchTableAdapter.Update(newLaunchRow);
+            _geneticsDataSet.Launches.AcceptChanges();
         }
 
 
@@ -175,7 +186,7 @@ namespace GeneticEngine
             DB_GeneticsDataSet.PersonsRow newPersonRow = _geneticsDataSet.Persons.NewPersonsRow();
             newPersonRow.Id = Guid.NewGuid();
             newPersonRow.Item = track.GetItem();
-            newPersonRow.Track = track.Genotype.ToString();
+            newPersonRow.Track = track.ToString();
             newPersonRow.Length = track.GetTrackLength();
             newPersonRow.TypeOfCrossingover = track.TypeOfCrossingover;
             newPersonRow.TypeOfMutation = track.TypeOfMutation;
@@ -184,10 +195,12 @@ namespace GeneticEngine
             newPersonRow.FirstParent = track.FirstParent;
             newPersonRow.SecondParent = track.SecondParent;
             newPersonRow.Launch = _launchId;
-            newPersonRow.BestRip = track.GetBestRip().ToString();
-            newPersonRow.WorstRip = track.GetWorstRip().ToString();
+            newPersonRow.BestRip = track.GetBestRib().ToString();
+            newPersonRow.WorstRip = track.GetWorstRib().ToString();
             newPersonRow.TypeOfTrack = track.GetTypeOfTrack();
             _geneticsDataSet.Persons.Rows.Add(newPersonRow);
+            _personsTableAdapter.Update(newPersonRow);
+            _geneticsDataSet.Persons.AcceptChanges();
         }
     }
 }
